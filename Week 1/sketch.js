@@ -10,7 +10,8 @@ let maxPoints = 100000;
 
 function setup() {
   width = 1265;
-  height = 900
+  height = 900;
+
   createCanvas(width, height)
   ax = width/2 -20;
   ay = height/4 + 280;
@@ -21,9 +22,10 @@ function setup() {
   cx = width/2 + 180;
   cy = height/1.5 + 280;
 
-  x = random(width);
-  y = random(height);
   background(220);
+
+  x = random(bx, cx);
+  y = random(ay, cy);
 
   stroke(220);
   strokeWeight(8);
@@ -31,6 +33,37 @@ function setup() {
   point(ax,ay);
   point(bx,by);
   point(cx,cy);
+
+  amount = 100000;
+  for(let i = 0; i < amount; i++){
+
+    strokeWeight(2);
+    stroke(0);
+    point(x,y);
+   
+    //selecteerd punten tussen die punten
+    let r = floor(random(1, 4));
+    if(r == 1){
+      x = lerp(x,ax,0.5);
+      y = lerp(y,ay,0.5);
+    }
+    else if(r ==2){
+      x = lerp(x,bx,0.5);
+      y = lerp(y,by,0.5);
+    }
+    else{
+      x = lerp(x,cx,0.5);
+      y = lerp(y,cy,0.5);
+    } 
+
+    
+    totalPointsDrawn++; 
+      
+     
+    if (totalPointsDrawn >= maxPoints) {
+      break; 
+    }
+  }
 }
 
 
@@ -286,35 +319,7 @@ function draw() {
     y2 += 15;
   }
 
-    //extra uitdagingen sierpinski
-
-    //als je t amount groter maakt dan gaat ie sneller
-  amount = 100000;
-  for(let i = 0; i < amount; i++){
-    strokeWeight(2);
-    stroke(0);
-    point(x,y);
-    //selecteerd punten tussen die punten
-    let r = floor(random(1, 4));
-    if(r == 1){
-      x = lerp(x,ax,0.5);
-      y = lerp(y,ay,0.5);
-    }
-    else if(r ==2){
-      x = lerp(x,bx,0.5);
-      y = lerp(y,by,0.5);
-    }
-    else{
-      x = lerp(x,cx,0.5);
-      y = lerp(y,cy,0.5);
-    }
-      totalPointsDrawn++; 
-      
-     
-    if (totalPointsDrawn >= maxPoints) {
-      break; 
-    }
-  }
+  
 
   //extra uitdaging album
   
