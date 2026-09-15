@@ -40,9 +40,9 @@ function draw() {
   
   beginShape();
 
-  vertex(0, 215);
-  vertex(60, 205);
-  vertex(150, 250);
+  vertex(0, 165);
+  vertex(60, 155);
+  vertex(150, 200);
   vertex(300, 400);
   vertex(0, 400);
 
@@ -55,7 +55,7 @@ function draw() {
   vertex(930, 190);
   vertex(1030, 50);
   vertex(1100, 30);
-  vertex(windowWidth, 0);
+  vertex(windowWidth, 10);
   vertex(windowWidth, 400);
 
   endShape(CLOSE);
@@ -73,11 +73,27 @@ function draw() {
   vertex(550, 400);
   vertex(0, 400);
 
-  endShape();
+  endShape(CLOSE);
+
+  beginShape();
+
+  vertex(600, 400);
+  vertex(700, 340);
+  vertex(890, 300);
+  vertex(1000, 180);
+  vertex(1100, 200);
+  vertex(1230, 130);
+  vertex(windowWidth, 120);
+  vertex(windowWidth, 400);
+
+  endShape(CLOSE);
 
   //road
   strokeWeight(0);
   fill(138, 89, 45);
   rect(0, windowHeight - 300, windowWidth, 300);
 
+  beginShape();
+
+  endShape()
 }
