@@ -299,13 +299,12 @@ function draw() {
   strokeWeight(0);
   rect(100, 470, 100, 50);
 
-  textSize(20);
+  textSize(15);
   fill(0);
   strokeWeight(1);
-
-  if (draw >= 1) {
-    text("Yo lock in chat", 120, 500)
-  }
+  text("Was ziek voor", 104, 490)
+  textSize(12);
+  text("helft van de week", 104, 510)
 }
 
 
