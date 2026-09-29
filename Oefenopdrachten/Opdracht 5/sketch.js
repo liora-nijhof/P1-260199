@@ -73,7 +73,7 @@ function draw() {
 
 
     //5
-    x4 = 560;
+    x4 = 0;
     dik = 0;
     fill(255);
     for (let i = 0; i < 5; i++) {
@@ -81,5 +81,25 @@ function draw() {
       circle(x4, 45, 40);
       dik += 1.5;
       x4 += 50;
+    }
+
+
+    //6
+    x5 = 350;
+    y5 = 110;
+    grootte = 200;
+    klik = 1;
+    strokeWeight(2);
+    for (let i = 0; i < 10; i++) {
+      if (klik == 1) {
+        fill(255);
+        circle(x5, x5, grootte);
+      } else if (klik == 2) {
+        fill(255, 0, 0);
+        circle(x5, y5, grootte);
+      }
+      x5 += 20;
+      y5 += 20;
+      grootte -= 20;
     }
 }
