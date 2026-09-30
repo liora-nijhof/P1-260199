@@ -137,6 +137,19 @@ function vraag1() {
   text("traditionally have?", 350, 210);
 }
 
+function vraag2() {
+  textFont('Times New Roman');
+  textSize(40);
+  fill(77, 54, 37);
+
+  drawingContext.shadowBlur = 10;
+  drawingContext.shadowColor = 'rgb(138, 110, 90)';
+
+  text("What do children traditionally leave", 200, 170);
+  text("out for Santa Claus?", 300, 210);
+}
+
+
 function antwoord1v1() {
   button1v1.style('background-color', '#a60202d0')
   button3v1.style('background-color', '#3b8d07ca')

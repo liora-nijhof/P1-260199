@@ -1,11 +1,9 @@
 let ran = 0;
 let isPaused = false
-let isFast = false
 
 function setup() {
   createCanvas(1000, 600);
 }
-
 
 
 function draw() {
@@ -25,6 +23,7 @@ function draw() {
   let start = (frameCount / fps) % 1
 
   for (let i = start; i < 40 + start; i++) {
+
     colors = [[color, 0, 0], [color, 0, color], [0, color, 0], [0, 0, color], [color, color, 0], [0, color, color]]
 
     let offset = 0.1 + (i * 0.1);
@@ -47,16 +46,8 @@ function draw() {
       frameCount = 0;
       fps = 0;
     }
-
-
-    if (isFast == true && isPaused == false) {
-      fps = 10;
-    } else if (isFast == false){
-      fps = 30;
-    }
   }
 }
-
 
 
 function keyPressed() {
@@ -66,9 +57,5 @@ function keyPressed() {
 
   if (key === ' ') {
     isPaused = !isPaused;
-  }
-
-  if (key === 'e') {
-    isFast = !isFast;
   }
 }  
