@@ -1,6 +1,5 @@
 let ran = 0;
 let isPaused = false
-let isFast = false
 
 function setup() {
   createCanvas(1000, 600);
