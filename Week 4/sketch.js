@@ -1,5 +1,6 @@
 let ran = 0;
 let isPaused = false
+let isFast = false
 
 function setup() {
   createCanvas(1000, 600);
@@ -48,13 +49,10 @@ function draw() {
     }
 
 
-    if (mouseIsPressed === true) {
-    isFast = !isFast;
-    console.log(isFast)
-    }
-
-    if (isFast == true) {
+    if (isFast == true && isPaused == false) {
       fps = 10;
+    } else if (isFast == false){
+      fps = 30;
     }
   }
 }
@@ -62,11 +60,15 @@ function draw() {
 
 
 function keyPressed() {
-  if (key === 'c') {
+  if (key === 'q') {
     ran ++;
   }
 
   if (key === ' ') {
     isPaused = !isPaused;
+  }
+
+  if (key === 'e') {
+    isFast = !isFast;
   }
 }  
