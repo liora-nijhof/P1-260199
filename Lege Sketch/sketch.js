@@ -1,26 +1,43 @@
+let arrPerson = [
+    ["bob", "henk", "harry", "hallo", "kweenie"],
+    ["lisa", "thijs", "jasper", "idk", "ja"],
+    ["veel", "man", "vrouw", "moeder", "vader"],
+    ["broer", "sus", "oom", "tante", "nicht"],
+    ["neef", "voor", "achter", "links", "rechts"]
+]
+
+
 function setup() {
-    createCanvas(800, 400);
+    createCanvas(300, 300);
     background(220);
 }
 
 function draw() {
-    strokeWeight(1);
-    fill(0);
     stroke(0);
-    text("1.", 20, 15);
-    text("2.", 20, 105);
-    text("3.", 80, 105);
-    text("4.", 80, 205);
-    text("5.", 540, 20);
-    text("6.", 350, 105);
-    text("7.", 625, 105);
+    l = 0;
+    for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < 5; j++) {
+            ja = arrPerson[i][j];
 
 
-    x = 20;
-    y = 20;
-    fill(255);
-    for (let i = 0; i < 10; i++) {
-        square(x, y, 50);
-        x += 50;
+            if (l == 0) {
+                fill(255);
+            } else {
+                fill(0);
+            }
+            strokeWeight(1);
+            rect(j * 50 + 25, i * 50 + 25, 50, 50);
+
+
+            fill(255, 0, 0);
+            textSize(10);
+            strokeWeight(0);
+            text(ja, j * 50 + 30, i * 50 + 40);
+            l += 1; 
+
+            if (l > 1) {
+                l = 0;
+            }
+        }
     }
 }
