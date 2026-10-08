@@ -30,6 +30,7 @@ let kirbyX = -180;
 
 
 function menu() {
+  buttonMenu.show();
   stroke(0);
   strokeWeight(2);
   fill('rgba(160, 6, 6, 0.81)');
@@ -39,6 +40,7 @@ function menu() {
 
   textSize(90);
   textFont('Times New Roman');
+  textAlign(LEFT);
   text("Christmas Quiz!", 210, 240);
 }
 
@@ -192,6 +194,9 @@ function end() {
   textSize(60);
   text("Your score:", 500, 360);
 
+  reset.show();
+  reset.mousePressed(Reset);
+
   textSize(50);
   if (score >= 0 && score <= 4) {
     fill('rgba(100, 6, 6, 0.81)');
@@ -273,6 +278,12 @@ function setup() {
   nextButton.style('background-color', 'rgba(240, 202, 132, 0.52)')
 
   nextButton.hide();
+
+  reset = createButton("Reset");
+  reset.position(440, 500);
+  reset.size(140, 30);
+  reset.style('background-color', 'rgba(240, 202, 132, 0.61)')
+  reset.hide();
 }
 
 
@@ -336,4 +347,25 @@ function draw() {
     buttonC.hide();
     buttonD.hide();
   }
+}
+
+function Reset() {
+  pressed = 0;
+  score = 0;
+  reset.hide();
+  
+  vragen = [["What is the traditional color of Santa Claus's suit?"], ["Which plant is traditionally hung as decoration underneath doorway's at Christmas?"], ["Which country is credited with starting the tradition of decorating Christmas trees?"], ["What is the name of Santa Claus's red-nosed reindeer?"], ["How many reindeer does Santa Claus traditionally have?"], ["What do children traditionally leave out for Santa Claus on Christmas Eve?"], ["On what date is Christmas Day celebrated?"], ["What does the word 'Yule' refer to?"], ["In which country did the tradition of Christmas stockings originate?"], ["What is the name of the three spirits in Charles Dickens' 'A Christmas Carol'?"]];
+
+  answer = [
+  ["Red", "Red", "Green", "Purple", "Yellow"],
+  ["Mistletoe", "Ivy", "Mistletoe", "Holly", "Poinsettia"],
+  ["Germany", "France", "England", "Germany", "United States"],
+  ["Rudolph", "Prancer", "Rudolph", "Dasher", "Comet"],
+  ["9", "9", "12", "10", "8"],
+  ["Milk and cookies", "Eggnog and pie", "Milk and cookies", "Hot cocoa and cake", "Juice and crackers"],
+  ["December 25", "December 24", "December 26", "January 6", "December 25"],
+  ["Old Germanic winter festival", "A Scandinavian Christmas elf", "The name of Christmas Eve", "Old Germanic winter festival", "A type of Christmas bread"],
+  ["Netherlands", "Netherlands", "Germany", "France", "United States"],
+  ["Past, Present, and Yet to Come", "Birth, Life, and Death", "Past, Present, and Yet to Come", "Past, Future, and Present", "Joy, Hope, and Love"]
+  ]
 }
