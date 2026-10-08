@@ -24,6 +24,10 @@ let answer = [
   ["Past, Present, and Yet to Come", "Birth, Life, and Death", "Past, Present, and Yet to Come", "Past, Future, and Present", "Joy, Hope, and Love"]
 ]
 
+let score = 0;
+
+let kirbyX = -180;
+
 
 function menu() {
   stroke(0);
@@ -38,9 +42,12 @@ function menu() {
   text("Christmas Quiz!", 210, 240);
 }
 
-function check() {
+function check1() {
   if (buttonA.html() == answer[order][0]) {
     buttonA.style('background-color: green;');
+    score += 1;
+  } else if (buttonA.html() != answer[order][0]) {
+    buttonA.style('background-color: brown;');
   }
   if (buttonB.html() == answer[order][0]) {
     buttonB.style('background-color: green;');
@@ -51,6 +58,87 @@ function check() {
   if (buttonD.html() == answer[order][0]) {
     buttonD.style('background-color: green;');
   }
+
+  nextButton.show();
+  nextButton.mousePressed(next);
+    
+  answer.splice(order, 1);
+  vragen.splice(order, 1);
+}
+
+function check2() {
+  if (buttonB.html() == answer[order][0]) {
+    buttonB.style('background-color: green;');
+    score += 1;
+  } else if (buttonB.html() != answer[order][0]) {
+    buttonB.style('background-color: brown;');
+  }
+
+  if (buttonA.html() == answer[order][0]) {
+    buttonA.style('background-color: green;');
+  }
+  if (buttonC.html() == answer[order][0]) {
+    buttonC.style('background-color: green;');
+  }
+  if (buttonD.html() == answer[order][0]) {
+    buttonD.style('background-color: green;');
+  }
+
+  nextButton.show();
+  nextButton.mousePressed(next);
+    
+  answer.splice(order, 1);
+  vragen.splice(order, 1);
+}
+
+function check3() {
+  if (buttonC.html() == answer[order][0]) {
+    buttonC.style('background-color: green;');
+    score += 1;
+  } else if (buttonC.html() != answer[order][0]) {
+    buttonC.style('background-color: brown;');
+  }
+
+  if (buttonB.html() == answer[order][0]) {
+    buttonB.style('background-color: green;');
+  }
+  if (buttonA.html() == answer[order][0]) {
+    buttonA.style('background-color: green;');
+  }
+  if (buttonD.html() == answer[order][0]) {
+    buttonD.style('background-color: green;');
+  }
+
+  nextButton.show();
+  nextButton.mousePressed(next);
+    
+  answer.splice(order, 1);
+  vragen.splice(order, 1);
+}
+
+function check4() {
+  if (buttonD.html() == answer[order][0]) {
+    buttonD.style('background-color: green;');
+    score += 1;
+  } else if (buttonD.html() != answer[order][0]) {
+    buttonD.style('background-color: brown;');
+  }
+
+  if (buttonB.html() == answer[order][0]) {
+    buttonB.style('background-color: green;');
+  }
+  if (buttonC.html() == answer[order][0]) {
+    buttonC.style('background-color: green;');
+  }
+  if (buttonA.html() == answer[order][0]) {
+    buttonA.style('background-color: green;');
+  }
+
+  nextButton.show();
+  nextButton.mousePressed(next);
+    
+  answer.splice(order, 1);
+  vragen.splice(order, 1);
 }
 
 function gameRonde() {
@@ -67,28 +155,65 @@ function gameRonde() {
 
   text(vragen[order], 200, 150, 600, 150);
 
+  buttonA.style('background-color: rgba(224, 174, 82, 0.52);');
+  buttonB.style('background-color: rgba(224, 174, 82, 0.52);');
+  buttonC.style('background-color: rgba(224, 174, 82, 0.52);');
+  buttonD.style('background-color: rgba(224, 174, 82, 0.52);');
+
   buttonA.html(answer[order][1]);
   buttonB.html(answer[order][2]);
   buttonC.html(answer[order][3]);
   buttonD.html(answer[order][4]);
-
-  vragen.splice(order, 1);
 
   buttonA.show();
   buttonB.show();
   buttonC.show();
   buttonD.show();
 
-  buttonA.mousePressed(check);
-  buttonB.mousePressed(check);
-  buttonC.mousePressed(check);
-  buttonD.mousePressed(check);
+  buttonA.mousePressed(check1);
+  buttonB.mousePressed(check2);
+  buttonC.mousePressed(check3);
+  buttonD.mousePressed(check4);
 }
 
+function end() {
+  stroke(0);
+  strokeWeight(2);
+  fill('rgba(160, 6, 6, 0.81)');
+
+  drawingContext.shadowBlur = 10;
+  drawingContext.shadowColor = 'rgba(119, 12, 12, 0.5)';
+
+  textSize(100);
+  textAlign(CENTER);
+  textFont('Times New Roman');
+  text("End of quiz!", 500, 230);
+
+  textSize(60);
+  text("Your score:", 500, 360);
+
+  textSize(50);
+  if (score >= 0 && score <= 4) {
+    fill('rgba(100, 6, 6, 0.81)');
+    text(score + "/10", 500, 450);
+    image(lol, 630, 380, 160, 160);
+  } else if (score >= 5 && score <= 6) {
+    fill('rgba(180, 66, 14, 0.81)');
+    text(score + "/10", 500, 450);
+  } else if (score >= 7 && score <= 10) {
+    fill('rgba(53, 158, 18, 0.81)');
+    text(score + "/10", 500, 450);
+  }
+}
 
 function startQuizPressed() {
   buttonMenu.hide();
   pressed += 1;
+}
+
+function next() {
+  nextButton.hide();
+  pressed+= 1;
 }
 
 
@@ -99,7 +224,10 @@ function press() {
 
 function preload() {
   img1 = loadImage("https://cdn.corenexis.com/f/BPOwfydmyGU.png");
-  img2 = loadImage("https://cdn.corenexis.com/f/200RZnlJDnt.png")
+  img2 = loadImage("https://cdn.corenexis.com/f/200RZnlJDnt.png");
+  lol = loadImage("https://cdn.corenexis.com/f/YvYmpiBNf2e.png");
+
+  kirby = loadImage("Assets/Y3il.gif");
 } 
 
 
@@ -138,6 +266,13 @@ function setup() {
   buttonB.hide();
   buttonC.hide();
   buttonD.hide();
+
+  nextButton = createButton("Next")
+  nextButton.position(720, 300);
+  nextButton.size(100, 30);
+  nextButton.style('background-color', 'rgba(240, 202, 132, 0.52)')
+
+  nextButton.hide();
 }
 
 
@@ -145,9 +280,60 @@ function draw() {
   if (pressed == 0) {
     image(img1, 0, 0, 1000, 650);
     menu();
+
+    image(kirby, kirbyX, 450, 200, 200);
+    kirbyX += 1;
+
+    if (kirbyX > 1000) {
+      kirbyX = -600;
+    }
   } else if (pressed == 1) {
     pressed = 2;
     image(img2, 0, 0, 1000, 650);
     gameRonde();
+  } else if (pressed == 3) {
+    pressed = 4;
+    image(img2, 0, 0, 1000, 650);
+    gameRonde();
+  } else if (pressed == 5) {
+    pressed = 6;
+    image(img2, 0, 0, 1000, 650);
+    gameRonde();
+  } else if (pressed == 7) {
+    pressed = 8;
+    image(img2, 0, 0, 1000, 650);
+    gameRonde();
+  } else if (pressed == 9) {
+    pressed = 10;
+    image(img2, 0, 0, 1000, 650);
+    gameRonde();
+  } else if (pressed == 11) {
+    pressed = 12;
+    image(img2, 0, 0, 1000, 650);
+    gameRonde();
+  } else if (pressed == 13) {
+    pressed = 14;
+    image(img2, 0, 0, 1000, 650);
+    gameRonde();
+  } else if (pressed == 15) {
+    pressed = 16;
+    image(img2, 0, 0, 1000, 650);
+    gameRonde();
+  } else if (pressed == 17) {
+    pressed = 18;
+    image(img2, 0, 0, 1000, 650);
+    gameRonde();
+  } else if (pressed == 19) {
+    pressed = 20  ;
+    image(img2, 0, 0, 1000, 650);
+    gameRonde();
+  } else if (pressed == 21) {
+    image(img1, 0, 0, 1000, 650);
+    end();
+
+    buttonA.hide();
+    buttonB.hide();
+    buttonC.hide();
+    buttonD.hide();
   }
 }

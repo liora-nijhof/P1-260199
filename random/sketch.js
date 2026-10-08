@@ -7,6 +7,12 @@ let score = 0;
 
 let jeweetwel;
 
+let xThing = 0;
+
+let lvl2But;
+
+let level = 0;
+
 function preload() {
   menuBg = loadImage("https://cdn.corenexis.com/f/jatVFN7zKQL.png");
   bgMusic = loadSound("banjostuff.mp3")
@@ -16,6 +22,10 @@ function preload() {
   apple = loadImage("https://cdn.corenexis.com/f/2Upymvsk8PD.png");
 
   lose = loadSound("flashbang.mp3");
+
+  arrow1 = loadImage("https://cdn.corenexis.com/f/x1gglUxcjdL.png");
+  arrow2 = loadImage("https://cdn.corenexis.com/f/TfR8bdTgyv9.png");
+  arrow3 = loadImage("https://cdn.corenexis.com/f/XU0p5Grmz8r.png");
 }
 
 function textFadeInOut(t, start, duration, fadeDuration){
@@ -56,12 +66,25 @@ async function setup() {
   size4 = random(60, 70);
 
   jeweetwel = textFadeInOut("yo ur ass dude", 0, 10, 60)
+
+  lvl2But = createButton("Next level");
+  lvl2But.position(400, 450);
+  lvl2But.size(150, 40);
+  lvl2But.style('background-color', 'rgba(255, 255, 255, 0.5')
+
+  lvl2But.hide();
 }
 
 function draw() {
   background(255);
 
-  menu();
+  if (xThing >= 0 && xThing <= 10066) {
+    menu();
+  } else if (xThing == 10067 && level == 0) {
+    level1();
+  } else if (level == 1) {
+    level2();
+  }
 }
 
 function menu() {
@@ -78,6 +101,24 @@ function menu() {
   strokeWeight(3);
   textSize(50);
   text("start -->", 290, 320);
+  console.log(xThing)
+
+  drawingContext.shadowColor = 'rgb(4, 2, 0)';
+  if (xThing == 1) {
+    image(arrow1, 350, 160, 100, 100);
+  } else if (xThing == 2) {
+    image(arrow1, 350, 160, 100, 100);
+    image(arrow2, 250, 350, 200, 200);
+  } else if (xThing >= 3) {
+    image(arrow1, 350, 160, 100, 100);
+    image(arrow2, 250, 350, 200, 200);
+    image(arrow3, 620, 100, 200, 200);
+  }
+}
+
+
+function levels() {
+  level += 1;
 }
 
 
@@ -86,10 +127,11 @@ function level1() {
   image(bg, 0, 0, 800, 600);
 
   //basket
-  drawingContext.shadowBlur = 30;
-  drawingContext.shadowColor = 'rgb(232, 170, 100)';
-  image(basket, mouseX - 65, mouseY - 10, 200, 200);
-
+  if (score <= 49) {
+    drawingContext.shadowBlur = 30;
+    drawingContext.shadowColor = 'rgb(232, 170, 100)';
+    image(basket, mouseX - 65, mouseY - 10, 200, 200);
+  }
 
   //apple
   drawingContext.shadowBlur = 5
@@ -110,29 +152,31 @@ function level1() {
   let d3 = dist(mouseX - 10, mouseY + 80, ranX3, y3);
   let d4 = dist(mouseX - 10, mouseY + 80, x4, y4);
 
-  if (d < 45) {
-    y = -80;
-    ranX = random(50, 750);
-    size = random(60, 70);
-    score ++;
-  } else if (d2 < 45) {
-    y2 = -160
-    ranX2 = random(50, 750);
-    size2 = random(60, 70);
-    score ++;
-  } else if (d3 < 45) {
-    y3 = -140
-    ranX3 = random(50, 750);
-    size3 = random(60, 70);
-    score++;
+  if (score <= 49) {
+    if (d < 45) {
+      y = -80;
+      ranX = random(50, 750);
+      size = random(60, 70);
+      score ++;
+    } else if (d2 < 45) {
+      y2 = -160
+      ranX2 = random(50, 750);
+      size2 = random(60, 70);
+      score ++;
+    } else if (d3 < 45) {
+      y3 = -140
+      ranX3 = random(50, 750);
+      size3 = random(60, 70);
+      score++;
+    }
   }
 
-  if (score >= 45) {
+  if (score >= 42) {
     y4 = y4 + 2.5;
     image(apple, x4, y4, size4, size4);
   }
 
-  if (d4 < 45) {
+  if (d4 < 42) {
     if (x4 > 400) {
       y4 -= 50;
       x4 -= 150;
@@ -145,23 +189,57 @@ function level1() {
     
   //score
   drawingContext.shadowBlur = 0;
+  fill(0);
   textSize(30);
   text(score + "/50", 20, 40);
 
 
   drawingContext.shadowBlur = 0;
-  if (y >= 600 + size || y2 >= 600 + size2 || y3 >= 600 + size3 || y4 >= 600 + size4) {
-    fill(255);
+  if (score <= 49) {
+    if (y >= 600 + size || y2 >= 600 + size2 || y3 >= 600 + size3 || y4 >= 600 + size4) {
+      fill(255);
+      rect(0, 0, 800, 600);
+      lose.play();
+
+      y = y + 0;
+      y2 = y2 + 0;
+      y3 = y3 + 0;
+      y4 = y4 + 0;
+
+      //hij showt de text nie
+      // jeweetwel.display();
+    }
+  }
+
+  if (score >= 50) {
+    fill('rgba(207, 206, 206, 0.31)')
     rect(0, 0, 800, 600);
-    lose.play();
 
-    y = y + 0;
-    y2 = y2 + 0;
-    y3 = y3 + 0;
-    y4 = y4 + 0;
+    textSize(90);
+    strokeWeight(2);
+    stroke(255);
+    fill(0);
+    text("Good job!", 200, 230);  
 
-    //hij showt de text nie
-    jeweetwel.display();
+    lvl2But.show();
+    lvl2But.mousePressed(levels);
+  }
+}
+
+
+function level2() {
+  background(220);
+  lvl2But.hide();
+}
+
+
+function mousePressed() {
+  if (mouseX <= 490 || mouseX >= 600) {
+    xThing += 1;
+  } else if (mouseY <= 200 || mouseY >= 550) {
+    xThing += 1;
+  } else {
+    xThing = 10067;
   }
 }
 
