@@ -5,12 +5,29 @@ let folder = 0;
 
 let saveKnop1 = 0;
 let saveKnop2 = 0;
+let exit = 0;
 
 let call;
 let font;
 
 let msg;
 let nam = 0;
+
+let health = 297;
+let energie = 297;
+let happy = 297;
+let hunger = 297;
+let hygiene = 297;
+
+let gifpause = 25;
+
+let xsleep1 = 10;
+let xsleep2 = 20;
+
+let free = true;
+
+let exitPress = false;
+
 
 
 function saveScore() {
@@ -30,6 +47,8 @@ function preload() {
   sleepy = loadImage("assets/sleepy.gif");
   hungry = loadImage("assets/hungry.gif");
   stinky = loadImage("assets/stinky.gif");
+  dead = loadImage("assets/death.gif");
+  laying = loadImage("assets/laying.gif");
 
   //folder stuff
   ui1 = loadImage("assets/ui1.png");
@@ -48,6 +67,14 @@ function preload() {
 
   //namelabel
   label = loadImage("assets/label.png");
+
+  //EXITBUTTON
+  exitUp = loadImage("assets/exitUp.png");
+  exitDown = loadImage("assets/exitDown.png");
+
+  //furniture
+  bed = loadImage("assets/bed.png");
+  bedAbove = loadImage("assets/bed2.png");
 }
 
 
@@ -99,20 +126,139 @@ function folder1() {
   }
 }
 
+
 function folder2() {
   drawingContext.shadowBlur = 0;
+  drawingContext.shadowOffsetX = -10;
   image(ui2, 590, 0, 650, 650);
 
   image(stats2, 615, 100, 360, 500);
   call.show();
+
+  //stats1
+  drawingContext.shadowOffsetX = 0;
+  strokeWeight(0);
+  fill(183, 134, 99);
+
+  rect(646, 395, health, 50);
+
+  rect(646, 515, energie, 50);
 }
+
 
 function folder3() {
   drawingContext.shadowBlur = 0;
+  drawingContext.shadowOffsetX = -10;
   image(ui3, 590, 0, 650, 650);
   call.hide();
 
   image(stats, 615, 100, 360, 500);
+
+  //stats2
+  drawingContext.shadowOffsetX = 0;
+  strokeWeight(0);
+  fill(183, 134, 99);
+
+  rect(646, 275, happy, 50);
+
+  rect(646, 395, hunger, 50);  
+
+  rect(646, 515, hygiene, 50);  
+}
+
+
+
+function sleep() {
+  xsleep1 = -1000;
+  xsleep2 = -1000;
+
+  image(bedAbove, 0, 0, 600, 750);
+
+  drawingContext.shadowBlur = 20;
+  drawingContext.shadowOffsetY = 0;
+  drawingContext.shadowOffsetX = 0;
+  drawingContext.shadowColor = 'rgb(153, 125, 110)'
+  image(laying, 105, 70, 400, 400);
+
+  drawingContext.shadowBlur = 0;
+  drawingContext.shadowOffsetY = 0;
+  drawingContext.shadowOffsetX = -10;
+  drawingContext.shadowColor = 'rgb(140, 93, 66)'
+  if (exit == 0) {
+    image(exitUp, 10, 10, 70, 70);
+    exitPress = false;
+  } else if (exit == 1) {
+    image(exitDown, 10, 10, 70, 70);
+    exitPress = true;
+    
+    if (!mouseIsPressed == true) {
+      exit = 0;
+    }
+  }
+}
+
+
+
+function main() {
+    image(bg, 0, 0, 750, 750);
+
+    drawingContext.shadowColor = 'rgb(82, 50, 32)'
+    image(bed, 400, 300, 190, 250);
+}
+
+
+
+function follow() {
+  drawingContext.shadowBlur = 10;
+  drawingContext.shadowOffsetY = -5;
+  drawingContext.shadowOffsetX = -10;
+  drawingContext.shadowColor = 'rgb(153, 125, 110)'
+
+  if (energie == 0 || happy == 0 || hunger == 0 || hygiene == 0) {
+    if (frameCount % 5 === 0 && health > 0) {
+      health -= 1;
+    }
+  }
+  
+  if (health != 0) {
+    if (energie > 100 && happy > 100 && hunger > 100 && hygiene > 100) {
+     if (x == mouseX - 100) {
+        image(idle, x, 400, 200, 200);
+      } else if (x > mouseX - 100 && x > 10) {
+       x -= 1;
+        image(left, x, 400, 200, 200);
+      } else if (x < mouseX - 100 && x < 380) {
+        x += 1;
+        image(right, x, 400, 200, 200); 
+      } else if (x >= 380) {
+        image(idle, x, 400, 200, 200);
+     } else if (x <= 10) {
+        image(idle, x, 400, 200, 200);
+     } else if (x == mouseX) {
+        image(idle, x, 400, 200, 200); //doesnt work
+     }
+   } else if (energie <= 100) {
+     image(sleepy, x, 400, 200, 200);
+   } else if (happy <= 100) {
+     image(bored, x, 400, 200, 200);
+   } else if (hunger <= 100) {
+     image(hungry, x, 400, 200, 200);
+   } else if (hygiene <= 100) {
+     image(stinky, x, 400, 200, 200);
+   }
+  }
+
+  if (health == 0) {
+    image(dead, x, 400, 200, 200);
+      
+    if (frameCount % 15 === 0 && gifpause > 0) {
+      gifpause --;
+    }
+  }
+
+  if (gifpause == 0) {
+    dead.pause();
+  }
 }
 
 
@@ -134,24 +280,40 @@ function mousePressed() {
   if (mouseX >= 615 && mouseX <= 975 && mouseY >= 240 && mouseY <= 320) {
     saveKnop2 = 1;
   }
+
+  if (mouseX >= 400 && mouseX <= 590 && mouseY >= 300 && mouseY <= 550) {
+    sleep();
+    free = false;
+  }
+
+  if (mouseX >= 10 && mouseX <= 80 && mouseY >= 10 && mouseY <= 80) {
+    exit = 1;
+    free = true;
+  }
 }
 
 
 
 function draw() {
   background(255);
-  image(bg, 0, 0, 750, 750);
+  if (free == true) {
+    main();
+    follow();
+  } else if (free == false) {
+    sleep();
+  }
+
   msg = call.value();
 
   drawingContext.shadowBlur = 0;
   drawingContext.shadowOffsetY = 0;
   drawingContext.shadowOffsetX = 0;
   drawingContext.shadowColor = 'rgb(140, 93, 66)'
-  image(label, 10, 10, 170, 70);
+  image(label, xsleep1, 10, 170, 70);
   textSize(40);
   textFont('Georgia');
   fill(102, 67, 41);
-  text(msg, 20, 60);
+  text(msg, xsleep2, 60);
 
 
   //folder
@@ -164,23 +326,55 @@ function draw() {
     folder3();
   }
 
-  //follow
-  drawingContext.shadowBlur = 10;
-  drawingContext.shadowOffsetY = -5;
-  drawingContext.shadowOffsetX = -10;
-  drawingContext.shadowColor = 'rgb(153, 125, 110)'
-  
-  if (x == mouseX - 100) {
-    image(idle, x, 400, 200, 200);
-  } else if (x > mouseX - 100 && x > 10) {
-    x -= 1;
-    image(left, x, 400, 200, 200);    
-  } else if (x < mouseX - 100 && x < 380) {
-    x += 1;
-    image(right, x, 400, 200, 200); 
-  } else if (x >= 380) {
-    image(idle, x, 400, 200, 200);
-  } else if (x <= 10) {
-    image(idle, x, 400, 200, 200);    
+  //stats
+  if (frameCount % 60 === 0 && energie > 0) {
+    energie--;
+  }
+  if (frameCount % 60 === 0 && happy > 0) {
+    happy--;
+  }
+  if (frameCount % 60 === 0 && hunger > 0) {
+    hunger--;
+  }
+  if (frameCount % 60 === 0 && hygiene > 0) {
+    hygiene--;
   }
 }
+
+
+// let bx = 200;
+// let by = 200;
+// let r = 25;       // Radius of the circle
+// let isBeingDragged = false;
+
+// function setup() {
+//   createCanvas(400, 400);
+// }
+
+// function draw() {
+//   background(220);
+
+//   // Update position if the shape is being dragged
+//   if (isBeingDragged) {
+//     bx = mouseX;
+//     by = mouseY;
+//   }
+
+//   // Draw the circle
+//   fill(isBeingDragged ? color(255, 100, 100) : color(100, 150, 255));
+//   noStroke();
+//   ellipse(bx, by, r * 2);
+// }
+
+// function mousePressed() {
+//   // Check if the mouse is inside the circle
+//   let d = dist(mouseX, mouseY, bx, by);
+//   if (d < r) {
+//     isBeingDragged = true;
+//   }
+// }
+
+// function mouseReleased() {
+//   // Stop dragging when the mouse button is let go
+//   isBeingDragged = false;
+// }
