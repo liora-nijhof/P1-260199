@@ -41,6 +41,17 @@ let r = 550;
 
 let bathPress = false;
 
+let soapDragged = false;
+let soapY = 100;
+let soapX = 100;
+let soapR = 150;
+
+let showerDragged = false;
+let showerY = 100;
+let showerX = 400;
+let showerR = 150;
+
+let soaped = false;
 
 
 function saveScore() {
@@ -64,6 +75,11 @@ function preload() {
   dead = loadImage("assets/death.gif");
   laying = loadImage("assets/laying.gif");
   sleepAnim = loadImage("assets/sleep.gif");
+
+  soap1 = loadImage("assets/washIdle.gif");
+  soap2 = loadImage("assets/Soaping.gif");
+  soap3 = loadImage("assets/soapyIdle.gif");
+  soap4 = loadImage("assets/washOff.gif");
 
   //folder stuff
   ui1 = loadImage("assets/ui1.png");
@@ -94,6 +110,9 @@ function preload() {
   bedAbove = loadImage("assets/bed2.png");
   blanket = loadImage("assets/blanket.png");
   bath = loadImage("assets/bath.png");
+
+  soapbar = loadImage("assets/soapBar.png");
+  shower = loadImage("assets/shower.gif");
 
   //left and right buttons
   leftUp = loadImage("assets/leftUp.png");
@@ -245,8 +264,7 @@ function sleep() {
 
   drawingContext.shadowBlur = 0;
   drawingContext.shadowOffsetY = 0;
-  drawingContext.shadowOffsetX = -10;
-  drawingContext.shadowColor = 'rgb(140, 93, 66)'
+  drawingContext.shadowOffsetX = 0;
   if (exit == 0) {
     image(exitUp, 10, 10, 70, 70);
     exitPress = false;
@@ -266,18 +284,49 @@ function wash() {
   xsleep1 = -1000;
   xsleep2 = -1000;
 
-  console.log(" wash")
-
   bathPress == true;
 
   image(bath, 0, 0, 600, 750);
 
-
+  //char
+  drawingContext.shadowBlur = 20;
+  drawingContext.shadowOffsetY = 0;
+  drawingContext.shadowOffsetX = 0;
+  drawingContext.shadowColor = 'rgb(153, 125, 110)'
+  if (soapX >= 70 && soapX <= 570 && soapY >= 200 && soapY <= 500){
+    image(soap2, 70, 200, 500, 500);
+    soaped = true;
+  } else if (showerX >= 70 && showerX <= 570 && showerY >= 200 && showerY <= 500){
+    image(soap4, 70, 200, 500, 500);
+    soaped = false;
+  } else if (soaped == true) {
+    image(soap3, 70, 200, 500, 500);
+  } else if (soaped == false){
+    image(soap1, 70, 200, 500, 500);
+  }
+  
 
   drawingContext.shadowBlur = 0;
+  image(soapbar, soapX, soapY, 150, 150);
+
+  if (soapDragged == true) {
+    soapX = mouseX - 75;
+    soapY = mouseY - 75;
+  }
+
+  drawingContext.shadowBlur = 0;
+  image(shower, showerX, showerY, 150, 150);
+
+  if (showerDragged == true) {
+    showerX = mouseX - 75;
+    showerY = mouseY - 75;
+  }
+
+
+  //exit
+  drawingContext.shadowBlur = 0;
   drawingContext.shadowOffsetY = 0;
-  drawingContext.shadowOffsetX = -10;
-  drawingContext.shadowColor = 'rgb(140, 93, 66)'
+  drawingContext.shadowOffsetX = 0;
   if (exit2 == 0) {
     image(exitUp2, 10, 10, 70, 70);
     exitPress2 = false;
@@ -338,6 +387,9 @@ function room2() {
   drawingContext.shadowOffsetX = 0;
 
   image(bg2, 0, 0, 600, 650);
+
+  xsleep1 = 10;
+  xsleep2 = 20;
 
   msg = call.value();
 
@@ -443,7 +495,7 @@ function mousePressed() {
     free = false;
   }
 
-  if (mouseX >= 10 && mouseX <= 350 && mouseY >= 300 && mouseY <= 550 && leftPress == true) {
+  if (mouseX >= 10 && mouseX <= 350 && mouseY >= 250 && mouseY <= 400 && leftPress == true) {
     bathPress = true;
   }
 
@@ -453,7 +505,7 @@ function mousePressed() {
   }
 
   if (mouseX >= 10 && mouseX <= 80 && mouseY >= 10 && mouseY <= 80) {
-    exit = 2;
+    exit2 = 1;
     bathPress = false;
   }
 
@@ -471,12 +523,27 @@ function mousePressed() {
   if (d < r) {
     dragged = true;
   }
+
+
+  let showerD = dist(showerX, mouseY, mouseX, showerY);
+  if (showerD < showerR) {
+    showerDragged = true;
+  }
+
+  let soapD = dist(soapX, mouseY, mouseX, soapY);
+  if (soapD < soapR && showerDragged == false) {
+    soapDragged = true;
+  }
 }
 
 
 
 function mouseReleased() {
   dragged = false;
+
+  soapDragged = false;
+
+  showerDragged = false;
 }
 
 
