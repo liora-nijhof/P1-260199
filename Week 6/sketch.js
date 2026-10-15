@@ -24,6 +24,8 @@ let hygiene = 297;
 
 let gifpause = 25;
 let gifpauseSleep = 15;
+let gifpauseSoap = 15;
+let gifpauseWash = 13;
 
 let xsleep1 = 10;
 let xsleep2 = 20;
@@ -296,13 +298,42 @@ function wash() {
   if (soapX >= 70 && soapX <= 570 && soapY >= 200 && soapY <= 500){
     image(soap2, 70, 200, 500, 500);
     soaped = true;
+
+    if (frameCount % 15 === 0 && gifpauseSoap > 0) {
+      gifpauseSoap --;
+    }
+
+    if (gifpauseSoap == 0) {
+      soap2.pause();
+    }
   } else if (showerX >= 70 && showerX <= 570 && showerY >= 200 && showerY <= 500){
     image(soap4, 70, 200, 500, 500);
     soaped = false;
+
+    
+    if (frameCount % 13 === 0 && gifpauseWash > 0) {
+      gifpauseWash --;
+    }
+
+    if (gifpauseWash == 0) {
+      soap4.pause();
+    }
   } else if (soaped == true) {
     image(soap3, 70, 200, 500, 500);
+    gifpauseWash = 13;
+    soap4.play();
+    soap4.reset();
   } else if (soaped == false){
     image(soap1, 70, 200, 500, 500);
+    gifpauseSoap = 15;
+    soap2.play();
+    soap2.reset();
+  }
+
+  if (!(hygiene >= 297) && showerX >= 70 && showerX <= 570 && showerY >= 200 && showerY <= 500) {
+    hygiene += 0.25;
+  } else if (!(hygiene >= 297) && soapX >= 70 && soapX <= 570 && soapY >= 200 && soapY <= 500) {
+    hygiene += 0.25;
   }
   
 
