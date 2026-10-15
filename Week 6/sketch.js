@@ -1,12 +1,17 @@
 //korilakkuma
 let x = 100;
 
+let deadFR = false;
+
 let folder = 0;
 
 let saveKnop1 = 0;
 let saveKnop2 = 0;
+
 let exit = 0;
 let exit2 = 0;
+let exit3 = 0;
+
 let left1 = 0;
 let right1 = 0;
 
@@ -36,12 +41,16 @@ let leftPress = false;
 
 let exitPress = false;
 let exitPress2 = false;
+let exitPress3 = false;
 
 let dragged = false;
 let by = 550;
 let r = 550;
 
+
 let bathPress = false;
+
+let fridgePress = false;
 
 let soapDragged = false;
 let soapY = 100;
@@ -54,6 +63,13 @@ let showerX = 400;
 let showerR = 150;
 
 let soaped = false;
+
+let ijskoffie2;
+let bun2;
+let giri2;
+let pancakes2;
+let jam2;
+
 
 
 function saveScore() {
@@ -106,6 +122,8 @@ function preload() {
   exitDown = loadImage("assets/exitDown.png");
   exitUp2 = loadImage("assets/exitUp.png");
   exitDown2 = loadImage("assets/exitDown.png");
+  exitUp3 = loadImage("assets/exitUp.png");
+  exitDown3 = loadImage("assets/exitDown.png");
 
   //furniture
   bed = loadImage("assets/bed.png");
@@ -116,11 +134,20 @@ function preload() {
   soapbar = loadImage("assets/soapBar.png");
   shower = loadImage("assets/shower.gif");
 
+  fridge = loadImage("assets/fridge.png");
+
   //left and right buttons
   leftUp = loadImage("assets/leftUp.png");
   leftDown = loadImage("assets/leftDown.png");
   rightUp = loadImage("assets/rightUp.png");
   rightDown = loadImage("assets/rightDown.png");
+
+  //food
+  ijskoffie = loadImage("assets/ijskoffie.png");
+  bun = loadImage("assets/chocobun.png");
+  jam = loadImage("assets/jam.png");
+  giri = loadImage("assets/shrimpgiri.png");
+  pancakes = loadImage("assets/pancakes.png");
 }
 
 
@@ -142,6 +169,12 @@ function setup() {
   call.attribute('maxlength', '7');
 
   call.hide();
+
+  ijskoffie2 = new food(ijskoffie, 115, 28, 100, 50, false, 115, 28);
+  bun2 = new food(bun, 230, 30, 100, 50, false, 230, 30);
+  giri2 = new food(giri, 115, 130, 100, 50, false, 115, 130);
+  jam2 = new food(jam, 230, 140, 100, 50, false, 230, 140);
+  pancakes2 = new food(pancakes, 115, 236, 100, 50, false, 115, 236);
 }
 
 
@@ -373,6 +406,98 @@ function wash() {
 
 
 
+class food {
+  constructor(foodImg, foodX, foodY, foodSize, foodR, foodDragged, startFoodX, startFoodY) {
+    this.foodX = foodX;
+    this.foodY = foodY;
+    this.foodR = foodR;
+    this.startFoodX = startFoodX;
+    this.startFoodY = startFoodY;
+    this.foodDragged = foodDragged;
+    this.foodImg = foodImg;
+    this.foodSize = foodSize;
+  }
+
+  draw() {
+    image(this.foodImg, this.foodX, this.foodY, this.foodSize, this.foodSize);
+  }
+
+  drag() {
+    let d = dist(mouseX - 50, mouseY - 50, this.foodX, this.foodY);
+    if (d < this.foodR) {
+      this.foodDragged = true;
+    } else {
+      this.foodDragged = false;
+    }
+
+    if (this.foodDragged == true) {
+      this.foodX = mouseX - 50;
+      this.foodY = mouseY - 50;
+    } else if (this.foodDragged == false) {
+      this.foodX = this.startFoodX;
+      this.foodY = this.startFoodY;
+    }
+  }
+
+  mouseReleased() {
+    this.foodDragged = false;
+  }
+}
+
+
+
+function eat() {
+  xsleep1 = -1000;
+  xsleep2 = -1000;
+
+  fridgePress = true;
+
+  image(fridge, -50, 0, 650, 750);
+
+
+  drawingContext.shadowBlur = 20;
+  drawingContext.shadowOffsetY = 0;
+  drawingContext.shadowOffsetX = 0;
+  drawingContext.shadowColor = 'rgb(153, 125, 110)'
+  image(idle, 200, 250, 500, 500);
+  
+
+  //food
+  drawingContext.shadowBlur = 0;
+  drawingContext.shadowOffsetY = 0;
+  drawingContext.shadowOffsetX = 0;
+
+  image(ijskoffie, 115, 28, 100, 100);
+  image(bun, 230, 30, 100, 100);
+  image(giri, 115, 130, 100, 100);
+  image(jam, 230, 140, 100, 100);
+  image(pancakes, 115, 236, 100, 100);
+
+  ijskoffie2.draw();
+  ijskoffie2.mouseReleased();
+  ijskoffie2.drag();  
+
+  
+
+  //exit
+  drawingContext.shadowBlur = 0;
+  drawingContext.shadowOffsetY = 0;
+  drawingContext.shadowOffsetX = 0;
+  if (exit3 == 0) {
+    image(exitUp3, 10, 10, 70, 70);
+    exitPress3 = false;
+  } else if (exit3 == 1) {
+    image(exitDown3, 10, 10, 70, 70);
+    exitPress3 = true;
+    
+    if (!mouseIsPressed == true) {
+      exit3 = 0;
+    }
+  }
+}
+
+
+
 function main() {
   drawingContext.shadowBlur = 0;
   drawingContext.shadowOffsetY = 0;
@@ -526,8 +651,12 @@ function mousePressed() {
     free = false;
   }
 
-  if (mouseX >= 10 && mouseX <= 350 && mouseY >= 250 && mouseY <= 400 && leftPress == true) {
+  if (mouseX >= 10 && mouseX <= 350 && mouseY >= 250 && mouseY <= 400 && leftPress == true && fridgePress == false) {
     bathPress = true;
+  }
+
+  if (mouseX >= 360 && mouseX <= 520 && mouseY >= 20 && mouseY <= 410 && leftPress == true && bathPress == false) {
+    fridgePress = true;
   }
 
   if (mouseX >= 10 && mouseX <= 80 && mouseY >= 10 && mouseY <= 80) {
@@ -540,6 +669,11 @@ function mousePressed() {
     bathPress = false;
   }
 
+  if (mouseX >= 10 && mouseX <= 80 && mouseY >= 10 && mouseY <= 80) {
+    exit3 = 1;
+    fridgePress = false;
+  }
+
   if (mouseX >= 10 && mouseX <= 60 && mouseY >= 300 && mouseY <= 350) {
     left1 = 1;
     free = true;
@@ -550,11 +684,13 @@ function mousePressed() {
     free = true;
   }
 
+
+
+
   let d = dist(47, mouseY, 557, by);
   if (d < r) {
     dragged = true;
   }
-
 
   let showerD = dist(showerX, mouseY, mouseX, showerY);
   if (showerD < showerR) {
@@ -581,16 +717,23 @@ function mouseReleased() {
 
 function draw() {
   background(255);
+
+  if (health == 0) {
+    deadFR = true;
+  }
+
   if (free == true && leftPress == false) {
     main();
     follow();
-  } else if (free == false) {
+  } else if (free == false && deadFR == false) {
     sleep();
-  } else if (leftPress == true && bathPress == false) {
+  } else if (deadFR == false && leftPress == true && bathPress == false && fridgePress == false) {
     room2();
     follow();
-  } else if (bathPress == true && leftPress == true) {
+  } else if (deadFR == false && bathPress == true && leftPress == true) {
     wash();
+  } else if (deadFR == false && fridgePress == true && leftPress == true) {
+    eat();
   }
 
   //folder
