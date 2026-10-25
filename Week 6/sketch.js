@@ -276,7 +276,7 @@ function sleep() {
     image(laying, 105, 70, 400, 400);
   }
 
-  if (frameCount % 15 === 0 && gifpauseSleep > 0) {
+  if (frameCount % 15 === 0 && gifpauseSleep > 0 && by == 300) {
     gifpauseSleep --;
   }
 
@@ -404,7 +404,10 @@ function wash() {
   }
 }
 
-
+// mousePressed(){
+//   if(currentFood != null)
+//   currentFood.mousepressed();
+// }
 
 class food {
   constructor(foodImg, foodX, foodY, foodSize, foodR, foodDragged, startFoodX, startFoodY) {
@@ -420,15 +423,6 @@ class food {
 
   draw() {
     image(this.foodImg, this.foodX, this.foodY, this.foodSize, this.foodSize);
-  }
-
-  drag() {
-    let d = dist(mouseX - 50, mouseY - 50, this.foodX, this.foodY);
-    if (d < this.foodR) {
-      this.foodDragged = true;
-    } else {
-      this.foodDragged = false;
-    }
 
     if (this.foodDragged == true) {
       this.foodX = mouseX - 50;
@@ -436,6 +430,15 @@ class food {
     } else if (this.foodDragged == false) {
       this.foodX = this.startFoodX;
       this.foodY = this.startFoodY;
+    }
+  }
+
+  mousePressed() {
+    let d = dist(mouseX - 50, mouseY - 50, this.foodX, this.foodY);
+    if (d < this.foodR) {
+      this.foodDragged = true;
+    } else {
+      this.foodDragged = false;
     }
   }
 
@@ -474,8 +477,10 @@ function eat() {
   image(pancakes, 115, 236, 100, 100);
 
   ijskoffie2.draw();
-  ijskoffie2.mouseReleased();
-  ijskoffie2.drag();  
+  bun2.draw();
+  giri2.draw();
+  jam2.draw();
+  pancakes2.draw();
 
   
 
@@ -701,6 +706,12 @@ function mousePressed() {
   if (soapD < soapR && showerDragged == false) {
     soapDragged = true;
   }
+
+  ijskoffie2.mousePressed();
+  bun2.mousePressed();
+  giri2.mousePressed();
+  jam2.mousePressed();
+  pancakes2.mousePressed();
 }
 
 
@@ -711,12 +722,20 @@ function mouseReleased() {
   soapDragged = false;
 
   showerDragged = false;
+
+  ijskoffie2.mouseReleased();
+  bun2.mouseReleased();
+  giri2.mouseReleased();
+  jam2.mouseReleased();
+  pancakes2.mouseReleased();
 }
 
 
 
 function draw() {
   background(255);
+
+  console.log(gifpauseSleep)
 
   if (health == 0) {
     deadFR = true;
