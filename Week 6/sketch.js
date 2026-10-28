@@ -82,6 +82,10 @@ let fed = false;
 
 let minigames = 0;
 let menuOption = 0;
+let ent = false;
+let settingOption = 0;
+let ent2 = false;
+let option = 0;
 
 
 //dit zijn al mn images en gifs
@@ -126,10 +130,12 @@ let assetFiles = {
   tv: "assets/pc.png",
   bgMini1: "assets/game1bg.png",
   minimenu: "assets/menuGif.gif",
-  mini1: "assets/mini1.png",
-  mini2: "assets/mini2.png",
-  mini3: "assets/mini3.png",
-  mini4: "assets/mini4.png",
+  menuArrow: "assets/menuArrow.png",
+  menuMenu: "assets/menuMenu.png",
+  settingMenu: "assets/settingMenu.png",
+  setting2 : "assets/setting2.png",
+  setting3 : "assets/setting2.png",
+  setting4 : "assets/setting2.png",
   leftUp: "assets/leftUp.png",
   leftDown: "assets/leftDown.png",
   rightUp: "assets/rightUp.png",
@@ -140,6 +146,8 @@ let assetFiles = {
   giri: "assets/shrimpgiri.png",
   pancakes: "assets/pancakes.png"
 };
+
+let menuMove;
 
 
 
@@ -156,6 +164,9 @@ function preload() {
   for (let key in assetFiles) {
     assets[key] = loadImage(assetFiles[key]);
   }
+
+  menuMove = loadSound("assets/menuMove.mp3");
+  gameMusic = loadSound("assets/gameMusic.mp3");
 }
 
 
@@ -166,6 +177,7 @@ function setup() {
   //dit is gwn een test dat ik t niet vergeet
   let score = getItem("Score");
   print("De opgeslage score is:", score);
+
 
   //dit zijn alle settings voor de naam tag links boven in
   call = createInput('Cutie');
@@ -738,17 +750,26 @@ function miniMenu() {
   drawingContext.shadowOffsetX = 0;
 
   image(assets.minimenu, 49, 57, 502, 320);
+  image(assets.menuMenu, 200, 120, 200, 250);
+
 
   //menu shit met key binds
-  if (menuOption == 0) {
-    image(assets.mini1, 49, 57, 502, 320);
-  } else if (menuOption == 1) {
-    image(assets.mini2, 49, 57, 502, 320);
-  } else if (menuOption == 2) {
-    image(assets.mini3, 49, 57, 502, 320);
-  } else if (menuOption == 3) {
-    image(assets.mini4, 49, 57, 502, 320);
+  if (menuOption < 0) {
+    menuOption = 3;
+  } else if (menuOption > 3) {
+    menuOption = 0;
   }
+
+  if (menuOption == 0) {
+    image(assets.menuArrow, 200, 190, 25, 25);
+  } else if (menuOption == 1) {
+    image(assets.menuArrow, 217, 234, 25, 25);
+  } else if (menuOption == 2) {
+    image(assets.menuArrow, 217, 275, 25, 25);
+  } else if (menuOption == 3) {
+    image(assets.menuArrow, 217, 320, 25, 25);
+  }
+
 
   //dat de exit knop erover heen tekent ipv eronder
   image(assets.exitUp, 10, 10, 70, 70);
@@ -756,14 +777,94 @@ function miniMenu() {
 
 
 
+function settings() {
+  drawingContext.shadowBlur = 0;
+  drawingContext.shadowOffsetY = 0;
+  drawingContext.shadowOffsetX = 0;
+
+  image(assets.minimenu, 49, 57, 502, 320);
+
+
+  if (option == 0) {
+    image(assets.settingMenu, 200, 120, 200, 250);
+  } else if (option == 1) {
+    image(assets.setting2, 200, 120, 200, 250);
+  } else if (option == 2) {
+    image(assets.setting3, 200, 120, 200, 250);
+  } else if (option == 3) {
+    image(assets.setting4, 200, 120, 200, 250);
+  } else if (option == 4) {
+    image(assets.setting4, 200, 120, 200, 250);
+  }
+
+
+  if (settingOption < 0) {
+    settingOption = 1;
+  } else if (settingOption > 1) {
+    settingOption = 0;
+  }
+
+  if (settingOption == 0) {
+    image(assets.menuArrow, 200, 190, 25, 25);    
+  } else if (settingOption == 1) {
+    image(assets.menuArrow, 217, 234, 25, 25);
+  }
+
+
+
+  image(assets.exitUp, 10, 10, 70, 70);
+}
+
+
+
 function keyPressed() {
+  //minigame menu
   if (minigames == 0) {
-    if (key === 'w' && menuOption >= 0) {
+    if (key === 'Enter') {
+      ent = true;
+      minigames = 1;
+    }
+
+    if ((key === 'w' || key === 'W' || keyCode === UP_ARROW) && menuOption >= 0 && ent == false) {
       menuOption -= 1;
-    } else if (key === 's' && menuOption <= 3) {
+      menuMove.setVolume(0.7);
+      menuMove.play();
+    } else if ((key === 's' || key === 'S' || keyCode === DOWN_ARROW) && menuOption <= 3 && ent == false) {
       menuOption += 1;
+      menuMove.setVolume(0.7);
+      menuMove.play();
+    }  
+  } else if (minigames == 1) {
+    if ((key === 'w' || key === 'W' || keyCode === UP_ARROW) && ent == true) {
+      settingOption -= 1;
+      menuMove.setVolume(0.7);
+      menuMove.play();
+    } else if ((key === 's' || key === 'S' || keyCode === DOWN_ARROW) && ent == true) {
+      settingOption += 1;
+      menuMove.setVolume(0.7);
+      menuMove.play();
+    }
+
+    if (key === 'Enter' && settingOption == 0) {
+      option = 1;      
+    } else if (key === 'Enter' && settingOption == 1) {
+      option = 2;
+    } else if (key === 'Enter' && settingOption == 0 && option == 2) {
+      option = 3;
+    } else if (key === 'Enter' && settingOption == 1 && option == 1) {
+      option = 4;
+    } else {
+      option = 0;
     }
   }
+
+  if (ent == true) {
+    if (key === 'Backspace') {
+      ent = false;
+      minigames = 0;
+    }
+  }
+
  }
 
 
@@ -798,6 +899,10 @@ function mousePressed() {
   if (mouseX >= 100 && mouseX <= 350 && mouseY >= 200 && mouseY <= 380 && leftPress == false) {
     free = false;
     gamePress = true;
+
+    gameMusic.setVolume(0.5);
+    gameMusic.loop();
+    gameMusic.play();
   }
 
 
@@ -833,6 +938,7 @@ function mousePressed() {
   if (mouseX >= 10 && mouseX <= 80 && mouseY >= 10 && mouseY <= 80) {
     exit4 = 1;
     gamePress = false;
+    gameMusic.stop();
   }
 
 
@@ -903,6 +1009,7 @@ function mouseReleased() {
 
 function draw() {
   background(255);
+  console.log(minigames)
 
   if (health == 0) {
     deadFR = true;
@@ -920,6 +1027,8 @@ function draw() {
 
     if (minigames == 0) {
       miniMenu();
+    } else if (ent == true && menuOption == 0) {
+      settings();
     }
   } else if (deadFR == false && leftPress == true && bathPress == false && fridgePress == false) {
     room2();
