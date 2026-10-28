@@ -783,6 +783,7 @@ function settings() {
   drawingContext.shadowOffsetX = 0;
 
   image(assets.minimenu, 49, 57, 502, 320);
+  console.log(settingOption)
 
 
   if (option == 0) {
@@ -792,8 +793,6 @@ function settings() {
   } else if (option == 2) {
     image(assets.setting3, 200, 120, 200, 250);
   } else if (option == 3) {
-    image(assets.setting4, 200, 120, 200, 250);
-  } else if (option == 4) {
     image(assets.setting4, 200, 120, 200, 250);
   }
 
@@ -835,26 +834,40 @@ function keyPressed() {
       menuMove.play();
     }  
   } else if (minigames == 1) {
-    if ((key === 'w' || key === 'W' || keyCode === UP_ARROW) && ent == true) {
-      settingOption -= 1;
-      menuMove.setVolume(0.7);
-      menuMove.play();
-    } else if ((key === 's' || key === 'S' || keyCode === DOWN_ARROW) && ent == true) {
-      settingOption += 1;
-      menuMove.setVolume(0.7);
-      menuMove.play();
+    if (ent == true) {
+      if (key === 'w' || key === 'W' || keyCode === UP_ARROW) {
+        settingOption -= 1;
+        menuMove.setVolume(0.7);
+        menuMove.play();
+      } else if (key === 's' || key === 'S' || keyCode === DOWN_ARROW) {
+        settingOption += 1;
+        menuMove.setVolume(0.7);
+        menuMove.play();
+      }
     }
 
     if (key === 'Enter' && settingOption == 0) {
-      option = 1;      
-    } else if (key === 'Enter' && settingOption == 1) {
-      option = 2;
-    } else if (key === 'Enter' && settingOption == 0 && option == 2) {
-      option = 3;
-    } else if (key === 'Enter' && settingOption == 1 && option == 1) {
-      option = 4;
-    } else {
-      option = 0;
+      if (option == 0) {
+        option = 1;
+      } else if (option == 1) {
+        option = 0;
+      } else if (option == 2) {
+        option = 3;
+      } else if (option == 3) {
+        option = 2;
+      }
+    }
+
+    if (key === 'Enter' && settingOption == 1) {
+      if (option == 0) {
+        option = 2;
+      } else if (option == 1) {
+        option = 3;
+      } else if (option == 2) {
+        option = 0;
+      } else if (option == 3) {
+        option = 1;
+      }
     }
   }
 
@@ -1009,7 +1022,6 @@ function mouseReleased() {
 
 function draw() {
   background(255);
-  console.log(minigames)
 
   if (health == 0) {
     deadFR = true;
