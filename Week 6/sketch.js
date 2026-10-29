@@ -22,6 +22,7 @@ let right1 = 0;
 
 let call;
 let font;
+let gameMusic;
 
 let msg;
 let nam = 0;
@@ -87,6 +88,32 @@ let settingOption = 0;
 let ent2 = false;
 let option = 0;
 
+let menuMove;
+
+let play1 = 1;
+let basketX = 100;
+
+let x1;
+let x2;
+let x3;
+
+let y1 = 55;
+let y2 = 55;
+let y3 = 55;
+
+let gameTimer = 0;
+
+let score1 = 0;
+let textX = 465;
+let gameover = false;
+
+let flappy1x = 100;
+let flappy2x = 250;
+let flappy3x = 450
+
+let music = true;
+let sfx = true;
+
 
 //dit zijn al mn images en gifs
 let assets = {};
@@ -128,14 +155,13 @@ let assetFiles = {
   shower: "assets/shower.gif",
   fridge: "assets/fridge.png",
   tv: "assets/pc.png",
-  bgMini1: "assets/game1bg.png",
   minimenu: "assets/menuGif.gif",
   menuArrow: "assets/menuArrow.png",
   menuMenu: "assets/menuMenu.png",
   settingMenu: "assets/settingMenu.png",
   setting2 : "assets/setting2.png",
-  setting3 : "assets/setting2.png",
-  setting4 : "assets/setting2.png",
+  setting3 : "assets/setting3.png",
+  setting4 : "assets/setting4.png",
   leftUp: "assets/leftUp.png",
   leftDown: "assets/leftDown.png",
   rightUp: "assets/rightUp.png",
@@ -144,16 +170,20 @@ let assetFiles = {
   bun: "assets/chocobun.png",
   jam: "assets/jam.png",
   giri: "assets/shrimpgiri.png",
-  pancakes: "assets/pancakes.png"
+  pancakes: "assets/pancakes.png",
+  game1bg: "assets/game1bg.gif",
+  casette1: "assets/casette1.png",
+  casette2: "assets/casette2.png",
+  casette3: "assets/casette3.png",
+  basket: "assets/basket.png",
+  game3bg: "assets/game3bg.gif"
 };
-
-let menuMove;
 
 
 
 //dit is voor mn ding dat ervoor zorgt dat alles blijft draaien offline
 function saveScore() {
-  storeItem("Score", score);
+  storeItem("Score", score1); // FIX: score -> score1
 }
 
 
@@ -199,6 +229,11 @@ function setup() {
   giri2 = new food(assets.giri, 115, 130, 100, 50, false, 115, 130);
   jam2 = new food(assets.jam, 230, 140, 100, 50, false, 230, 140);
   pancakes2 = new food(assets.pancakes, 115, 236, 100, 50, false, 115, 236);
+
+  //casettes
+  x1 = random(55, 425);
+  x2 = random(55, 425);
+  x3 = random(55, 425);
 }
 
 
@@ -783,17 +818,24 @@ function settings() {
   drawingContext.shadowOffsetX = 0;
 
   image(assets.minimenu, 49, 57, 502, 320);
-  console.log(settingOption)
 
-
+  console.log(sfx)
   if (option == 0) {
     image(assets.settingMenu, 200, 120, 200, 250);
+    music = true;
+    sfx = true;
   } else if (option == 1) {
     image(assets.setting2, 200, 120, 200, 250);
+    music = false;
+    sfx = true;
   } else if (option == 2) {
     image(assets.setting3, 200, 120, 200, 250);
+    music = true;
+    sfx = false;
   } else if (option == 3) {
     image(assets.setting4, 200, 120, 200, 250);
+    music = false;
+    sfx = false;
   }
 
 
@@ -810,10 +852,251 @@ function settings() {
   }
 
 
+  image(assets.exitUp, 10, 10, 70, 70);
+}
+
+
+
+
+function resetGame1() {
+  y1 = 55;
+  y2 = 55;
+  y3 = 55;
+  x1 = random(55, 425);
+  x2 = random(55, 425);
+  x3 = random(55, 425);
+  gameTimer = 0;
+  score1 = 0;
+  basketX = 240;
+  textX = 465;
+  gameover = false;
+}
+
+
+
+function caughtTape() {
+  score1 ++;
+  happy = min(happy + 15, 297);
+}
+
+
+
+function game1() {
+ image(assets.game1bg, 49, 57, 502, 320);
+
+  if (play1 == 1) {
+    game1Menu();
+  } else if (play1 == 2) {
+    game1Play();
+  } else if (play1 == 0) {
+    game1Over();
+  }
 
   image(assets.exitUp, 10, 10, 70, 70);
 }
 
+
+
+function game1Menu() {
+  fill("rgba(0, 0, 0, 0.66)");
+  strokeWeight(3);
+  stroke("rgba(0, 0, 0, 0.82)")
+  rect(100, 100, 400, 250);
+
+  fill("rgba(0, 0, 0, 0.66)");
+  strokeWeight(2);
+  stroke("rgba(0, 0, 0, 0.82)")
+  rect(175, 250, 250, 50);
+
+  
+  strokeWeight(0);
+  textSize(40);
+  fill("rgba(240, 240, 240, 0.78)");
+  text("Catch the tapes!", 160, 150);
+
+  textSize(15);
+  text("Use A/D or ◀/▶ to move the basket", 180, 200);
+
+  textSize(25);
+  text("Press enter to start", 195, 285);
+
+  image(assets.exitUp, 10, 10, 70, 70);
+}
+
+
+
+function game1Over() {
+  gameover = true;
+  basketX = -2000;
+  gameTimer = -5;
+  textX = -2000;
+
+
+  fill("rgba(0, 0, 0, 0.66)");
+  strokeWeight(3);
+  stroke("rgba(0, 0, 0, 0.82)")
+  rect(100, 100, 400, 250);
+
+  fill("rgba(0, 0, 0, 0.66)");
+  strokeWeight(2);
+  stroke("rgba(0, 0, 0, 0.82)")
+  rect(175, 250, 250, 50);
+
+  
+  strokeWeight(0);
+  textSize(40);
+  fill("rgba(240, 240, 240, 0.78)");
+  text("Game over! :(", 175, 150);
+
+  textSize(15);
+  text("Use A/D or ◀/▶ to move the basket", 180, 200);
+  text("Your previous score: " + score1, 200, 240);
+
+  textSize(25);
+  text("Press enter to restart", 185, 285);
+
+  image(assets.exitUp, 10, 10, 70, 70);
+}
+
+
+
+function game1Play() {
+  drawingContext.shadowBlur = 20;
+  drawingContext.shadowColor = 'rgba(149, 149, 149, 0.18)';
+  drawingContext.shadowOffsetY = 0;
+  drawingContext.shadowOffsetX = 0;
+
+  if (frameCount % 13 === 0) {
+    gameTimer ++;
+  }
+
+  if (gameTimer > 0) {
+    y1 = y1 + 1.2;
+    image(assets.casette1, x1, y1, 90, 90);
+  }
+  
+  if (gameTimer > 8) {
+    y2 = y2 + 1.5;
+    image(assets.casette2, x2, y2, 90, 90);
+  }
+  
+  if (gameTimer > 13) {
+    y3 = y3 + 1.8;
+    image(assets.casette3, x3, y3, 90, 90);
+  }
+
+
+  if (y1 >= 310) {
+    play1 = 0;
+  } else if (y2 >= 310) {
+    play1 = 0;
+  } else if (y3 >= 310) {
+    play1 = 0;
+  }
+
+
+  let d1 = dist(basketX, 260 + 80, x1, y1);
+  let d2 = dist(basketX, 260 + 80, x2, y2);
+  let d3 = dist(basketX, 260 + 80, x3, y3);
+
+  if (d1 < 100) {
+    y1 = 55;
+    x1 = random(55, 425);
+    caughtTape();
+  } else if (d2 < 100) {
+    y2 = 55;
+    x2 = random(55, 425);
+    caughtTape();
+  } else if (d3 < 100) {
+    y3 = 55;
+    x3 = random(55, 425);
+    caughtTape();
+  }
+
+
+  if (keyIsDown(68) === true || keyIsDown(RIGHT_ARROW) === true) {
+    basketX += 6;
+  }
+  if (keyIsDown(65) === true || keyIsDown(LEFT_ARROW) === true) {
+    basketX -= 6;
+  }  
+
+  if (gameover != true) {
+    if (basketX <= 55) {
+      basketX = 55;
+    } else if (basketX >= 425) {
+      basketX = 425;
+    }
+  }
+
+  image(assets.basket, basketX, 260, 120, 120);
+
+
+  fill(0);
+  textSize(20);
+  text("Score: " + score1, textX, 118);
+
+  drawingContext.shadowBlur = 0;
+  image(assets.exitUp, 10, 10, 70, 70);
+}
+
+
+
+function game2() {
+  image(assets.game1bg, 49, 57, 502, 320);
+
+  image(assets.exitUp, 10, 10, 70, 70);
+}
+
+
+
+function game3() {
+  image(assets.game3bg, 49, 57, 502, 320);
+  flappy1();
+  flappy2();
+  flappy3();
+
+  image(assets.exitUp, 10, 10, 70, 70);
+}
+
+
+
+function flappy1() {
+  drawingContext.shadowBlur = 0;
+  drawingContext.shadowOffsetY = 0;
+  drawingContext.shadowOffsetX = 0;
+
+
+  fill(0);
+  rect(flappy1x, 57, 60, 70);
+  rect(flappy1x - 10, 127, 80, 20);
+
+  rect(flappy1x, 270, 60, 108);
+  rect(flappy1x - 10, 250, 80, 20);
+}
+
+
+
+function flappy2() {
+  fill(0);
+  rect(flappy2x, 57, 60, 30);
+  rect(flappy2x - 10, 77, 80, 20);
+
+  rect(flappy2x, 230, 60, 148);
+  rect(flappy2x - 10, 210, 80, 20);
+}
+
+
+
+function flappy3() {
+  fill(0);
+  rect(flappy3x, 57, 60, 30);
+  rect(flappy3x - 10, 77, 80, 20);
+
+  rect(flappy3x, 330, 60, 48);
+  rect(flappy3x - 10, 310, 80, 20);
+}
+ 
 
 
 function keyPressed() {
@@ -822,27 +1105,36 @@ function keyPressed() {
     if (key === 'Enter') {
       ent = true;
       minigames = 1;
+      return; // FIX: stop here, otherwise the same Enter also starts the game
     }
 
     if ((key === 'w' || key === 'W' || keyCode === UP_ARROW) && menuOption >= 0 && ent == false) {
       menuOption -= 1;
-      menuMove.setVolume(0.7);
-      menuMove.play();
+      if (sfx == true) {
+        menuMove.setVolume(0.7);
+        menuMove.play();
+      }
     } else if ((key === 's' || key === 'S' || keyCode === DOWN_ARROW) && menuOption <= 3 && ent == false) {
       menuOption += 1;
-      menuMove.setVolume(0.7);
-      menuMove.play();
+      if (sfx == true) {
+        menuMove.setVolume(0.7);
+        menuMove.play();
+      }
     }  
   } else if (minigames == 1) {
     if (ent == true) {
       if (key === 'w' || key === 'W' || keyCode === UP_ARROW) {
         settingOption -= 1;
-        menuMove.setVolume(0.7);
-        menuMove.play();
+        if (sfx == true) {
+          menuMove.setVolume(0.7);
+          menuMove.play();
+        }
       } else if (key === 's' || key === 'S' || keyCode === DOWN_ARROW) {
         settingOption += 1;
-        menuMove.setVolume(0.7);
-        menuMove.play();
+        if (sfx == true) {
+          menuMove.setVolume(0.7);
+          menuMove.play();
+        }
       }
     }
 
@@ -856,9 +1148,7 @@ function keyPressed() {
       } else if (option == 3) {
         option = 2;
       }
-    }
-
-    if (key === 'Enter' && settingOption == 1) {
+    } else if (key === 'Enter' && settingOption == 1) {
       if (option == 0) {
         option = 2;
       } else if (option == 1) {
@@ -878,6 +1168,13 @@ function keyPressed() {
     }
   }
 
+  
+  if (ent == true && menuOption == 2 && (play1 == 1 || play1 == 0)) {
+    if (key === 'Enter') {
+      resetGame1();
+      play1 = 2;
+    }
+  }
  }
 
 
@@ -909,13 +1206,17 @@ function mousePressed() {
 
 
   //voor de tv
-  if (mouseX >= 100 && mouseX <= 350 && mouseY >= 200 && mouseY <= 380 && leftPress == false) {
+  if (mouseX >= 100 && mouseX <= 350 && mouseY >= 200 && mouseY <= 380 && leftPress == false && free == true) {
     free = false;
     gamePress = true;
 
-    gameMusic.setVolume(0.5);
-    gameMusic.loop();
-    gameMusic.play();
+   
+    if (music == true) {
+      gameMusic.setVolume(0.5);
+      gameMusic.loop();
+    } else if (music == false) {
+      gameMusic.stop();
+    }
   }
 
 
@@ -1039,8 +1340,15 @@ function draw() {
 
     if (minigames == 0) {
       miniMenu();
+      play1 = 1; // FIX: was 0, that made the game skip the start screen
     } else if (ent == true && menuOption == 0) {
       settings();
+    } else if (ent == true && menuOption == 2) {
+      game1();
+    } else if (ent == true && menuOption == 1) {
+      game2();
+    } else if (ent == true && menuOption == 3) {
+      game3();
     }
   } else if (deadFR == false && leftPress == true && bathPress == false && fridgePress == false) {
     room2();
@@ -1081,4 +1389,3 @@ function draw() {
     }
   }
 }
-
