@@ -121,6 +121,8 @@ let sfx = true;
 let birdY = 150;
 let gameTimer3 = 0;
 
+let saved = 0;
+
 
 //dit zijn al mn images en gifs
 let assets = {};
@@ -184,14 +186,39 @@ let assetFiles = {
   casette3: "assets/casette3.png",
   basket: "assets/basket.png",
   game3bg: "assets/game3bg.gif",
-  bird: "assets/bird.gif"
+  bird: "assets/bird.gif",
+  funny: "assets/construction.jpe"
 };
 
 
 
 //dit is voor mn ding dat ervoor zorgt dat alles blijft draaien offline
-function saveScore() {
-  storeItem("Score", score1); // FIX: score -> score1
+function saveScore1() {
+  storeItem('name', msg);
+
+  storeItem('health', health);
+  storeItem('energie', energie);
+  storeItem('happy', happy);
+  storeItem('hunger', hunger);
+  storeItem('hygiene', hygiene);
+}
+
+function getScore1() {
+  msg = getItem('name');
+  
+  health = getItem('health');
+  energie = getItem('energie');
+  happy = getItem('happy');
+  hunger = getItem('hunger');
+  hygiene = getItem('hygiene');
+}
+
+function resetGame() {
+  health = 297;
+  energie = 297;
+  happy = 297;
+  hunger = 297;
+  hygiene = 297;
 }
 
 
@@ -205,12 +232,16 @@ function preload() {
 
   menuMove = loadSound("assets/menuMove.mp3");
   gameMusic = loadSound("assets/gameMusic.mp3");
+  bgMusic = loadSound("assets/bgMusic.mp3");
 }
 
 
 
 function setup() {
   createCanvas(1000, 650);
+  getScore1();
+  bgMusic.setVolume(0.4);
+  bgMusic.play();
   
   //dit is gwn een test dat ik t niet vergeet
   let score = getItem("Score");
@@ -261,9 +292,16 @@ function folder1() {
     image(assets.saveButUp1, 615, 100, 360, 80);
   } else if (saveKnop1 == 1) {
     image(assets.saveButDown1, 615, 100, 360, 80);
+
+    if (saved == 0) {
+      saveScore1();
+      print("Game saved!");
+      saved = 1;
+    }
     
-    if (!mouseIsPressed == true) {
+    if (!mouseIsPressed) {
       saveKnop1 = 0;
+      saved = 0;
     }
   }
 
@@ -271,6 +309,8 @@ function folder1() {
     image(assets.saveButUp2, 615, 210, 360, 80);
   } else if (saveKnop2 == 1) {
     image(assets.saveButDown2, 615, 210, 360, 80);
+
+    resetGame();
     
     if (!mouseIsPressed == true) {
       saveKnop2 = 0;
@@ -697,7 +737,7 @@ function room2() {
 function follow() {
   drawingContext.shadowBlur = 10;
   drawingContext.shadowOffsetY = -5;
-  drawingContext.shadowOffsetX = -10;
+  drawingContext.shadowOffsetX = -5;
   drawingContext.shadowColor = 'rgb(118, 92, 78)'
 
 
@@ -764,7 +804,7 @@ function games() {
   xsleep2 = -1000;
 
   if (happy < 298) {
-    happy ++;
+    happy += 0.7;
   }
 
   gamePress = true;
@@ -798,6 +838,7 @@ function miniMenu() {
 
   image(assets.minimenu, 49, 57, 502, 320);
   image(assets.menuMenu, 200, 120, 200, 250);
+  image(assets.funny, 250, 235, 100, 25);
 
 
   //menu shit met key binds
@@ -835,18 +876,28 @@ function settings() {
   if (option == 0) {
     image(assets.settingMenu, 200, 120, 200, 250);
     music = true;
+    if (!gameMusic.isPlaying) {
+      gameMusic.play();
+    }
+
     sfx = true;
   } else if (option == 1) {
     image(assets.setting2, 200, 120, 200, 250);
     music = false;
+    gameMusic.pause();
     sfx = true;
   } else if (option == 2) {
     image(assets.setting3, 200, 120, 200, 250);
     music = true;
+    if (!gameMusic.isPlaying) {
+      gameMusic.play();
+    }
+
     sfx = false;
   } else if (option == 3) {
     image(assets.setting4, 200, 120, 200, 250);
     music = false;
+    gameMusic.pause();
     sfx = false;
   }
 
@@ -1128,18 +1179,33 @@ function game3Play() {
     gameTimer3 ++;
   }
 
+  if (flappy1x == 100 || flappy2x == 100 || flappy3x == 100) {
+    score3 ++;
+  }
+
   if (flappy1x >= 80 && flappy1x <= 160) {
-    console.log("yo")
     if (birdY <= 130 || birdY >= 210) {
       play3 = 0;
     }
   }
 
+  if (flappy2x >= 80 && flappy2x <= 160) {
+    if (birdY <= 80 || birdY >= 260) {
+      play3 = 0;
+    }
+  }
 
-  if (gameTimer3 <= 1) {
-    birdY += 0.4;
-  } else {
+  if (flappy3x >= 80 && flappy3x <= 160) {
+    if (birdY <= 180 || birdY >= 360) {
+      play3 = 0;
+    }
+  }
+
+
+  if (gameTimer3 <= 2) {
     birdY += 0.9;
+  } else {
+    birdY += 1.5;
   }
 
 
@@ -1192,6 +1258,10 @@ function game3Play() {
   } else if (flappy3x <= 80) {
     flappy3x = 920;
   }
+
+  fill(255);
+  textSize(20);
+  text("Score: " + score3, textX3, 80);
 }
 
 
@@ -1221,7 +1291,7 @@ function game3Over() {
 
   textSize(15);
   text("Press 'space' to go up", 235, 200);
-  text("Your previous score: " + score3, 200, 240);
+  text("Your previous score: " + score3, 232, 240);
 
   textSize(25);
   text("Press enter to restart", 185, 285);
@@ -1282,7 +1352,7 @@ function keyPressed() {
     if (key === 'Enter') {
       ent = true;
       minigames = 1;
-      return; // FIX: stop here, otherwise the same Enter also starts the game
+      return; 
     }
 
     if ((key === 'w' || key === 'W' || keyCode === UP_ARROW) && menuOption >= 0 && ent == false) {
@@ -1347,7 +1417,7 @@ function keyPressed() {
 
   if (play3 == 2) {
     if (keyCode === 32) {
-      birdY -= 25;
+      birdY -= 35;
       gameTimer3 = 0;
     }
   }
@@ -1384,6 +1454,7 @@ function mousePressed() {
   //save buttons
   if (mouseX >= 615 && mouseX <= 975 && mouseY >= 130 && mouseY <= 210) {
     saveKnop1 = 1;
+    slot1 = true;
   }
   if (mouseX >= 615 && mouseX <= 975 && mouseY >= 240 && mouseY <= 320) {
     saveKnop2 = 1;
@@ -1401,12 +1472,9 @@ function mousePressed() {
     free = false;
     gamePress = true;
 
-   
     if (music == true) {
       gameMusic.setVolume(0.5);
       gameMusic.loop();
-    } else if (music == false) {
-      gameMusic.stop();
     }
   }
 
@@ -1519,14 +1587,18 @@ function draw() {
     deadFR = true;
   }
 
-
   //alle volgordens van wanneer welke functies moeten draaien enzo
   if (free == true && leftPress == false) {
     main();
     follow();
+
+    if (!bgMusic.isPlaying()) {
+      bgMusic.play();
+    }
   } else if (free == false && deadFR == false && gamePress == false) {
     sleep();
   } else if (free == false && deadFR == false && gamePress == true) {
+    bgMusic.pause();
     games();
 
     if (minigames == 0) {
@@ -1536,8 +1608,6 @@ function draw() {
       settings();
     } else if (ent == true && menuOption == 2) {
       game1();
-    } else if (ent == true && menuOption == 1) {
-      game2();
     } else if (ent == true && menuOption == 3) {
       game3();
     }
