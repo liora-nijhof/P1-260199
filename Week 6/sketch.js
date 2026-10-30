@@ -107,12 +107,19 @@ let score1 = 0;
 let textX = 465;
 let gameover = false;
 
-let flappy1x = 100;
-let flappy2x = 250;
-let flappy3x = 450
+let play3 = 1;
+let flappy1x = 520;
+let flappy2x = 720;
+let flappy3x = 920;
+let score3 = 0;
+let gameover3 = false;
+let textX3 = 465;
 
 let music = true;
 let sfx = true;
+
+let birdY = 150;
+let gameTimer3 = 0;
 
 
 //dit zijn al mn images en gifs
@@ -176,7 +183,8 @@ let assetFiles = {
   casette2: "assets/casette2.png",
   casette3: "assets/casette3.png",
   basket: "assets/basket.png",
-  game3bg: "assets/game3bg.gif"
+  game3bg: "assets/game3bg.gif",
+  bird: "assets/bird.gif"
 };
 
 
@@ -755,6 +763,10 @@ function games() {
   xsleep1 = -1000;
   xsleep2 = -1000;
 
+  if (happy < 298) {
+    happy ++;
+  }
+
   gamePress = true;
 
   image(assets.tv, 0, 0, 600, 700);
@@ -870,6 +882,18 @@ function resetGame1() {
   basketX = 240;
   textX = 465;
   gameover = false;
+}
+
+
+
+function resetGame3() {
+  score3 = 0;
+  birdY = 150;
+  flappy1x = 520;
+  flappy2x = 720;
+  flappy3x = 920;
+  textX3 = 465;
+  gameover3 = false;
 }
 
 
@@ -1052,9 +1076,155 @@ function game2() {
 
 function game3() {
   image(assets.game3bg, 49, 57, 502, 320);
-  flappy1();
-  flappy2();
-  flappy3();
+
+  if (play3 == 1) {
+    game3Menu();
+  } else if (play3 == 2) {
+    game3Play();
+  } else if (play3 == 0) {
+    game3Over();
+  }
+
+  image(assets.exitUp, 10, 10, 70, 70);
+}
+
+
+
+function game3Menu() {
+  fill("rgba(0, 0, 0, 0.66)");
+  strokeWeight(3);
+  stroke("rgba(0, 0, 0, 0.82)")
+  rect(100, 100, 400, 250);
+
+  fill("rgba(0, 0, 0, 0.66)");
+  strokeWeight(2);
+  stroke("rgba(0, 0, 0, 0.82)")
+  rect(175, 250, 250, 50);
+
+  
+  strokeWeight(0);
+  textSize(40);
+  fill("rgba(240, 240, 240, 0.78)");
+  text("Flappy bird!", 195, 150);
+
+  textSize(15);
+  text("Press 'space' to go up", 235, 200);
+
+  textSize(25);
+  text("Press enter to start", 195, 285);
+
+  image(assets.exitUp, 10, 10, 70, 70);
+}
+
+
+
+function game3Play() {
+  drawingContext.shadowBlur = 20;
+  drawingContext.shadowColor = 'rgba(149, 149, 149, 0.18)';
+  drawingContext.shadowOffsetY = 0;
+  drawingContext.shadowOffsetX = 0;
+
+  if (frameCount % 13 === 0) {
+    gameTimer3 ++;
+  }
+
+  if (flappy1x >= 80 && flappy1x <= 160) {
+    console.log("yo")
+    if (birdY <= 130 || birdY >= 210) {
+      play3 = 0;
+    }
+  }
+
+
+  if (gameTimer3 <= 1) {
+    birdY += 0.4;
+  } else {
+    birdY += 0.9;
+  }
+
+
+  if (birdY <= 37) {
+    birdY = 37;
+  } else if (birdY >= 317) {
+    play3 = 0;
+  }
+
+  image(assets.bird, 120, birdY, 70, 70);
+ 
+
+  flappy1x --;
+
+  flappy2x --;
+
+  flappy3x --;
+
+  let d1 = dist(flappy1x, 57, flappy3x, 57);
+  let d2 = dist(flappy1x, 57, flappy2x, 57);
+  let d3 = dist(flappy2x, 57, flappy3x, 57);
+
+  if (d1 < 200) {
+    flappy1x = flappy3x + 200;
+  }
+  
+  if (d2 < 200) {
+    flappy2x = flappy1x + 200;
+  }
+
+  if (d3 < 200) {
+    flappy3x = flappy2x + 200;
+  }
+
+
+  if (flappy1x <= 450 && flappy1x >= 80) {
+    flappy1();
+  } else if (flappy1x <= 80) {
+    flappy1x = 520;
+  }
+
+  if (flappy2x <= 450 && flappy2x >= 80) {
+    flappy2();
+  } else if (flappy2x <= 80) {
+    flappy2x = 720;
+  }
+
+  if (flappy3x <= 450 && flappy3x >= 80) {
+    flappy3();
+  } else if (flappy3x <= 80) {
+    flappy3x = 920;
+  }
+}
+
+
+function game3Over() {
+  gameover3 = true;
+  flappy1x = -2000;
+  flappy2x = -2000;
+  flappy3x = -2000;
+  textX3 = -2000;
+
+
+  fill("rgba(0, 0, 0, 0.66)");
+  strokeWeight(3);
+  stroke("rgba(0, 0, 0, 0.82)")
+  rect(100, 100, 400, 250);
+
+  fill("rgba(0, 0, 0, 0.66)");
+  strokeWeight(2);
+  stroke("rgba(0, 0, 0, 0.82)")
+  rect(175, 250, 250, 50);
+
+  
+  strokeWeight(0);
+  textSize(40);
+  fill("rgba(240, 240, 240, 0.78)");
+  text("Game over! :(", 175, 150);
+
+  textSize(15);
+  text("Press 'space' to go up", 235, 200);
+  text("Your previous score: " + score3, 200, 240);
+
+  textSize(25);
+  text("Press enter to restart", 185, 285);
 
   image(assets.exitUp, 10, 10, 70, 70);
 }
@@ -1065,7 +1235,6 @@ function flappy1() {
   drawingContext.shadowBlur = 0;
   drawingContext.shadowOffsetY = 0;
   drawingContext.shadowOffsetX = 0;
-
 
   fill(0);
   rect(flappy1x, 57, 60, 70);
@@ -1078,6 +1247,10 @@ function flappy1() {
 
 
 function flappy2() {
+  drawingContext.shadowBlur = 0;
+  drawingContext.shadowOffsetY = 0;
+  drawingContext.shadowOffsetX = 0;
+
   fill(0);
   rect(flappy2x, 57, 60, 30);
   rect(flappy2x - 10, 77, 80, 20);
@@ -1089,9 +1262,13 @@ function flappy2() {
 
 
 function flappy3() {
+  drawingContext.shadowBlur = 0;
+  drawingContext.shadowOffsetY = 0;
+  drawingContext.shadowOffsetX = 0;
+
   fill(0);
-  rect(flappy3x, 57, 60, 30);
-  rect(flappy3x - 10, 77, 80, 20);
+  rect(flappy3x, 57, 60, 130);
+  rect(flappy3x - 10, 177, 80, 20);
 
   rect(flappy3x, 330, 60, 48);
   rect(flappy3x - 10, 310, 80, 20);
@@ -1168,11 +1345,25 @@ function keyPressed() {
     }
   }
 
+  if (play3 == 2) {
+    if (keyCode === 32) {
+      birdY -= 25;
+      gameTimer3 = 0;
+    }
+  }
+
   
   if (ent == true && menuOption == 2 && (play1 == 1 || play1 == 0)) {
     if (key === 'Enter') {
       resetGame1();
       play1 = 2;
+    }
+  }
+
+  if (ent == true && menuOption == 3 && (play3 == 1 || play3 == 0)) {
+    if (key === 'Enter') {
+      resetGame3();
+      play3 = 2;
     }
   }
  }
