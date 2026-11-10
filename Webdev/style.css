@@ -1,7 +1,7 @@
 .header {
   padding: 60px;
   text-align: center;
-  background: url(header.jpe);
+  background: url(assets/header.jpe);
   color: black;
   font-size: 50px;
   font-style: normal;
@@ -9,14 +9,20 @@
   text-shadow: 3px 3px black;
 }
 
-.divider {
-    height: 100px;
+hr {
+  display: block;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  margin-left: auto;
+  margin-right: auto;
+  border-style: inset;
+  border-width: 1px;
 }
 
-.divider img {
-   width: 100%;
-   height: 100%;
-   object-fit: fill; 
+hr.double {
+  color: black;
+ border-top: 20px double;
+ border-bottom: none;
 }
 
 .searchbar input[type=text] {
@@ -26,7 +32,7 @@
   padding-left: 10px;
   padding-bottom: 10px;
   padding-right: 10px;
-  margin-top: 25px;
+  margin-top: 15px;
   margin-left: 100px;
   font-size: 32px;
   border-radius: 15px;
@@ -62,15 +68,20 @@ select {
   padding-left: 10px;
   padding-bottom: 10px;
   padding-right: 10px;
-  margin-top: -60px;
+  margin-top: -65px;
   margin-right: 100px;
   font-size: 32px;
   border-radius: 15px;
   border: solid;
+  border-color: black;
   color: #000000bd;
 }
 
 select::picker-icon {
   color: #000000bd;
   transition: 0.4s rotate;
+}
+
+.soul-volume1 img {
+  margin-top: 60;
 }
