@@ -7,8 +7,6 @@
         <link rel="stylesheet" href="./style.css">
 
         <script src="shop.js"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
         
         <title>manga_webshop</title>
     </head>
@@ -33,5 +31,58 @@
                 <option value="high-low">Price high-low</option>
             </select>
         </div>
+
+        <script src="https://raw.githubusercontent.com/janl/mustache.js/refs/heads/master/mustache.js"></script>
+        <script>
+            const renderer = {
+                to_html(template, products) {
+                    return products.map(product => {
+                        return template.replace(/\{\{(\w+)\}\}/g, (match, key) => {
+                            return product[key] !== undefined ? product[key] : '';
+                        });
+                    }).join('');
+                }
+            };
+
+            let clicked = 0;
+
+            let products = [
+                {
+                    'title': "Soul eater vol 01",
+                    'price': "€" + 12.99,
+                    'image': "assets/soul/volume1.jpe",
+                    'style': "width:400px;height:600px;",
+                    'pressed': clicked
+                },
+                {
+                    'title': "Soul eater vol 02",
+                    'price': "€" + 12.99,
+                    'image': "assets/soul/volume2.jpe",
+                    'style': "width:400px;height:600px;",
+                    'pressed': clicked
+                },
+                {
+                    'title': "Soul eater vol 04",
+                    'price': "€" + 12.99,
+                    'image': "assets/soul/volume4.jpe",
+                    'style': "width:400px;height:600px;",
+                    'pressed': clicked
+                },
+                {
+                    'title': "Soul eater vol 05",
+                    'price': "€" + 12.99,
+                    'image': "assets/soul/volume5.jpe",
+                    'style': "width:400px;height:600px;",
+                    'pressed': clicked
+                }
+            ]
+
+            const template = "<img src={{image}} alt={{image}} style={{style}}> <p> <h1>{{title}}</h1> <p> <h2>{{price}}</h2> <br>";
+
+            let html = renderer.to_html(template, products);
+
+            document.write(html)
+        </script>
+        
     </body>
 </html>
