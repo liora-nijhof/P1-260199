@@ -84,10 +84,9 @@ select::picker-icon {
 
 .product {
   width: 300px;
-  background: #00000010;
+  background: white;
   object-fit: cover;
-  border: groove;
-  border-width: thick;
+  border: 5px solid #c7c6c6;
   margin-top: 100px;
   margin-left: 28px;
   margin-right: 28px;
@@ -111,10 +110,10 @@ select::picker-icon {
 .itemframe {
   float: left;
   margin: 90px;
-  border: 15px solid #c7c6c6;
-  border-radius: 4px;
+  border: 10px solid #c7c6c6;
   padding: 5px;
   width: 500px;
+  background: white;
 }
 
 .itemtitle {
@@ -122,11 +121,16 @@ select::picker-icon {
   margin-top: 150px;
   font-size: 30px;
   line-height: 0;
+  width: 1300px;
 }
 
 .itemdesc {
+  border: 5px solid #c7c6c6;
+  width: 520px;
+  padding-left: 20px;
   float: center;
-  margin-top: 150px;
-  font-size: 30px;
-  line-height: 0;
+  margin-left: 710px;
+  margin-top: 50px;
+  font-size: 25px;
+  line-height: 1.5;
 }
