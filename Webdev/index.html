@@ -32,6 +32,7 @@
             </select>
         </div>
 
+        <div id="product-container"></div>
         <script src="https://raw.githubusercontent.com/janl/mustache.js/refs/heads/master/mustache.js"></script>
         <script>
             const renderer = {
@@ -49,218 +50,253 @@
             let products = [
                 {
                     'title': "Soul eater vol 01",
-                    'price': "€" + 12.99,
+                    'price': 12.99,
                     'image': "assets/soul/volume1.jpe",
                     'style': "width:400px;height:600px;",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/soul-eater-vol-01.html"
                 },
                 {
                     'title': "Soul eater vol 02",
-                    'price': "€" + 13.99,
+                    'price': 13.99,
                     'image': "assets/soul/volume2.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/soul-eater-vol-02.html"
                 },
                 {
                     'title': "Soul eater vol 04",
-                    'price': "€" + 12.95,
+                    'price': 12.95,
                     'image': "assets/soul/volume4.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/soul-eater-vol-04.html"
                 },
                 {
                     'title': "Soul eater vol 05",
-                    'price': "€" + 11.99,
+                    'price': 11.99,
                     'image': "assets/soul/volume5.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/soul-eater-vol-05.html"
                 },
                 {
                     'title': "Soul eater vol 09",
-                    'price': "€" + 13.50,
+                    'price': 13.50,
                     'image': "assets/soul/volume9.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/soul-eater-vol-09.html"
                 },
                 {
                     'title': "Soul eater vol 10",
-                    'price': "€" + 11.95,
+                    'price': 11.95,
                     'image': "assets/soul/volume10.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/soul-eater-vol-10.html"
                 },
                 {
                     'title': "Soul eater vol 11",
-                    'price': "€" + 12.99,
+                    'price': 12.99,
                     'image': "assets/soul/volume11.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/soul-eater-vol-11.html"
                 },
                 {
                     'title': "Soul eater vol 15",
-                    'price': "€" + 13.99,
+                    'price': 13.99,
                     'image': "assets/soul/volume15.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/soul-eater-vol-15.html"
                 },
                 {
                     'title': "Soul eater vol 23",
-                    'price': "€" + 14.99,
+                    'price': 14.99,
                     'image': "assets/soul/volume23.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/soul-eater-vol-23.html"
                 },
                 {
                     'title': "Death note vol 01",
-                    'price': "€" + 8.99,
+                    'price': 8.99,
                     'image': "assets/deathnote/dnvol1.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/death-note-vol-01.html"
                 },
                 {
                     'title': "Death note vol 02",
-                    'price': "€" + 9.99,
+                    'price': 9.99,
                     'image': "assets/deathnote/dnvol2.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/death-note-vol-02.html"
                 },
                 {
                     'title': "Death note vol 04",
-                    'price': "€" + 8.99,
+                    'price': 8.99,
                     'image': "assets/deathnote/dnvol4.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/death-note-vol-04.html"
                 },
                 {
                     'title': "Death note vol 05",
-                    'price': "€" + 8.99,
+                    'price': 8.99,
                     'image': "assets/deathnote/dnvol5.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/death-note-vol-05.html"
                 },
                 {
                     'title': "Death note vol 06",
-                    'price': "€" + 10.99,
+                    'price': 10.99,
                     'image': "assets/deathnote/dnvol6.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/death-note-vol-06.html"
                 },
                 {
                     'title': "Death note vol 07",
-                    'price': "€" + 12.99,
+                    'price': 12.99,
                     'image': "assets/deathnote/dnvol7.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/death-note-vol-07.html"
                 },
                 {
                     'title': "Death note vol 08",
-                    'price': "€" + 9.99,
+                    'price': 9.99,
                     'image': "assets/deathnote/dnvol8.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/death-note-vol-08.html"
                 },
                 {
                     'title': "Death note vol 09",
-                    'price': "€" + 8.99,
+                    'price': 8.99,
                     'image': "assets/deathnote/dnvol9.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/death-note-vol-09.html"
                 },
                 {
                     'title': "Death note vol 10",
-                    'price': "€" + 11.99,
+                    'price': 11.99,
                     'image': "assets/deathnote/dnvol10.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/death-note-vol-10.html"
                 },
                 {
                     'title': "Death note vol 11",
-                    'price': "€" + 13.99,
+                    'price': 13.99,
                     'image': "assets/deathnote/dnvol11.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/death-note-vol-11.html"
                 },
                 {
                     'title': "Death note short stories",
-                    'price': "€" + 16.95,
+                    'price': 16.95,
                     'image': "assets/deathnote/specialstory.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/death-note-short-stories.html"
                 },
                 {
                     'title': "Chainsaw man vol 01",
-                    'price': "€" + 8.99,
+                    'price': 8.99,
                     'image': "assets/chainsawman/cmvol1.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/chainsaw-man-vol-01.html"
                 },
                 {
                     'title': "Chainsaw man vol 02",
-                    'price': "€" + 9.95,
+                    'price': 9.95,
                     'image': "assets/chainsawman/cmvol2.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/chainsaw-man-vol-02.html"
                 },
                 {
                     'title': "Chainsaw man vol 03",
-                    'price': "€" + 8.95,
+                    'price': 8.95,
                     'image': "assets/chainsawman/cmvol3.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/chainsaw-man-vol-03.html"
                 },
                 {
                     'title': "Chainsaw man vol 04",
-                    'price': "€" + 10.95,
+                    'price': 10.95,
                     'image': "assets/chainsawman/cmvol4.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/chainsaw-man-vol-04.html"
                 },
                 {
                     'title': "Chainsaw man vol 05",
-                    'price': "€" + 10.99,
+                    'price': 10.99,
                     'image': "assets/chainsawman/cmvol5.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/chainsaw-man-vol-05.html"
                 },
                 {
                     'title': "Chainsaw man vol 09",
-                    'price': "€" + 8.99,
+                    'price': 8.99,
                     'image': "assets/chainsawman/cmvol9.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/chainsaw-man-vol-09.html"
                 },
                 {
                     'title': "Chainsaw man vol 10",
-                    'price': "€" + 9.95,
+                    'price': 8.95,
                     'image': "assets/chainsawman/cmvol10.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/chainsaw-man-vol-10.html"
                 },
                 {
                     'title': "Full metal alchemist vol 01",
-                    'price': "€" + 9.95,
+                    'price': 9.99,
                     'image': "assets/fullmetal/fmavol1.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/full-metal-alchemist-vol-01.html"
                 },
                 {
                     'title': "Full metal alchemist vol 02",
-                    'price': "€" + 9.95,
+                    'price': 9.95,
                     'image': "assets/fullmetal/fmavol2.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/full-metal-alchemist-vol-02.html"
                 },
                 {
                     'title': "Full metal alchemist vol 03",
-                    'price': "€" + 9.95,
+                    'price': 10.55,
                     'image': "assets/fullmetal/fmavol3.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/full-metal-alchemist-vol-03.html"
                 },
                 {
                     'title': "Full metal alchemist vol 04",
-                    'price': "€" + 9.95,
+                    'price': 7.95,
                     'image': "assets/fullmetal/fmavol4.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/full-metal-alchemist-vol-04.html"
                 },
                 {
                     'title': "Full metal alchemist vol 09",
-                    'price': "€" + 9.95,
+                    'price': 9.95,
                     'image': "assets/fullmetal/fmavol9.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/full-metal-alchemist-vol-09.html"
                 },
                 {
                     'title': "Full metal alchemist vol 11",
-                    'price': "€" + 9.95,
+                    'price': 9.99,
                     'image': "assets/fullmetal/fmavol11.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/full-metal-alchemist-vol-11.html"
                 },
                 {
                     'title': "Full metal alchemist vol 12",
-                    'price': "€" + 9.95,
+                    'price': 8.99,
                     'image': "assets/fullmetal/fmavol12.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/full-metal-alchemist-vol-12.html"
                 },
                 {
                     'title': "Full metal alchemist vol 19",
-                    'price': "€" + 9.95,
+                    'price': 10.95,
                     'image': "assets/fullmetal/fmavol19.jpe",
-                    'pressed': clicked
+                    'pressed': clicked,
+                    'page': "pages/full-metal-alchemist-vol-19.html"
                 }
             ]
 
-            const template = "<div class='product'> <img src={{image}} alt={{image}} style='width:300px;height:500px;'> <p> <h1>{{title}}</h1> <p> <h2>{{price}}</h2></div>";
+            const template = "<div class='product'> <a href={{page}}><img src={{image}} alt={{image}} style='width:300px;height:500px;'></a> <p> <h1>{{title}}</h1> <p> <h2>€{{price}}</h2></div>";
 
             let html = renderer.to_html(template, products);
 

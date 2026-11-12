@@ -96,3 +96,37 @@ select::picker-icon {
   padding-left: 25px;
   display:inline-block;
 }
+
+.headeritem {
+  padding: 10px;
+  text-align: center;
+  background: url(assets/header.jpe);
+  color: black;
+  font-size: 30px;
+  font-style: normal;
+  -webkit-text-stroke: 0.5px white;
+  text-shadow: 1px 3px black;
+}
+
+.itemframe {
+  float: left;
+  margin: 90px;
+  border: 15px solid #c7c6c6;
+  border-radius: 4px;
+  padding: 5px;
+  width: 500px;
+}
+
+.itemtitle {
+  float: center;
+  margin-top: 150px;
+  font-size: 30px;
+  line-height: 0;
+}
+
+.itemdesc {
+  float: center;
+  margin-top: 150px;
+  font-size: 30px;
+  line-height: 0;
+}
