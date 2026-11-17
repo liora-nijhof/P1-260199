@@ -4,9 +4,43 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
 
         <link rel="stylesheet" href="../style.css">
+
+        <style>
+            .button {
+            border: none;
+            border-radius: 4px;
+            background-color: #adadad;
+            color: black;
+            padding: 10px 70px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 22px;
+            margin: 40px 0px;
+            cursor: pointer;
+            transition-duration: 0.4s;
+            }
+
+            .button2 {
+            border: none;
+            border-radius: 4px;
+            background-color: #adadad;
+            color: black;
+            padding: 10px 70px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 22px;
+            margin: 40px 60px;
+            cursor: pointer;
+            transition-duration: 0.4s;
+            }
+
+            .button2:hover {box-shadow:0 8px 16px 0 rgba(0,0,0,0.6)}
+            .button:hover {box-shadow:0 8px 16px 0 rgba(0,0,0,0.6)}
+        </style>
     </head>
     <body> 
         <a href="../index.html" style="text-decoration: none;">
@@ -14,5 +48,23 @@
                 <h1>Manga webshop</h1>
             </div>
         </a>
+        <div class="itemframe">
+            <img src="../assets/chainsawman/cmvol4.jpe" style="height:700px;width:500px;">
+        </div>
+        <div class="itemtitle">
+            <h1>Chainsaw Man Volume 04</h1>
+            <br>
+            <br>
+            <p>Prijs is inclusief btw</p>
+            <h2>€10.95</h2>
+        </div>
+
+        <button class="button">Put in cart</button>
+
+        <button class="button2">Buy now</button>
+
+        <div class="itemdesc">
+            <p>Denji was a small-time devil hunter just trying to survive in a harsh world. After being killed on a job, he is revived by his pet devil Pochita and becomes something new and dangerous―Chainsaw Man!</p>
+        </div>
     </body>
 </html>

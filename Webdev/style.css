@@ -9,6 +9,20 @@
   text-shadow: 3px 3px black;
 }
 
+.cart {
+  float:right;
+  margin-right:-20px;
+  margin-top:-390px;
+  height:120px;
+  border:solid;
+  border-width:thick;
+  transition-duration: 0.4s;
+}
+
+.cart:hover {
+  box-shadow:0 8px 16px 0 rgba(0,0,0,0.6);
+}
+
 hr {
   display: block;
   margin-top: 0.5em;
@@ -94,6 +108,11 @@ select::picker-icon {
   padding-right: 25px;
   padding-left: 25px;
   display:inline-block;
+  transition-duration: 0.4s;
+}
+
+.product:hover {
+  box-shadow:0 8px 16px 0 rgba(0,0,0,0.6);
 }
 
 .headeritem {
@@ -121,7 +140,7 @@ select::picker-icon {
   margin-top: 150px;
   font-size: 30px;
   line-height: 0;
-  width: 1300px;
+  width: 1600px;
 }
 
 .itemdesc {

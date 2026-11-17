@@ -14,13 +14,16 @@
         <div class="header">
             <h1>Manga webshop</h1>
             <p>Best manga's for a cheap price!</p>
+            <div class="cart">
+                <img src="./assets/cart.jpe" alt="cart_icon" width="120" height="120"> 
+            </div>
         </div>
         <hr class="double">
         <div class="searchbar">
             <input type="text" placeholder="Search...">
         </div>
         <div class="sort-select">
-            <select id="sort-select">
+            <select id="sort-select" onchange="selectFunction(this)">
                 <button>
                     <selectedcontent></selectedcontent>
                 </button>
@@ -31,6 +34,16 @@
                 <option value="high-low">Price high-low</option>
             </select>
         </div>
+        <script>
+            function selectFunction(elem) {
+                if(elem.value == "low-high") {
+                    console.log(products)
+                    products.sort((a, b) => a.price - b.price);
+                    console.log(products)
+                    let html = renderer.to_html(template, products);
+                }
+            }
+        </script>
 
         <div id="product-container"></div>
         <script src="https://raw.githubusercontent.com/janl/mustache.js/refs/heads/master/mustache.js"></script>
@@ -181,13 +194,6 @@
                     'image': "assets/deathnote/dnvol11.jpe",
                     'pressed': clicked,
                     'page': "pages/death-note-vol-11.html"
-                },
-                {
-                    'title': "Death note short stories",
-                    'price': 16.95,
-                    'image': "assets/deathnote/specialstory.jpe",
-                    'pressed': clicked,
-                    'page': "pages/death-note-short-stories.html"
                 },
                 {
                     'title': "Chainsaw man vol 01",
