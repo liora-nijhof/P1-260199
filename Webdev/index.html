@@ -28,35 +28,30 @@
                     <selectedcontent></selectedcontent>
                 </button>
 
-                <option value="bestselling">Bestselling</option>
+                <option value="order">In order</option>
                 <option value="popular">Popular</option>
                 <option value="low-high">Price low-high</option>
                 <option value="high-low">Price high-low</option>
             </select>
         </div>
-        <script>
-            function selectFunction(elem) {
-                if(elem.value == "low-high") {
-                    console.log(products)
-                    products.sort((a, b) => a.price - b.price);
-                    console.log(products)
-                    let html = renderer.to_html(template, products);
-                }
-            }
-        </script>
 
         <div id="product-container"></div>
         <script src="https://raw.githubusercontent.com/janl/mustache.js/refs/heads/master/mustache.js"></script>
         <script>
-            const renderer = {
-                to_html(template, products) {
-                    return products.map(product => {
-                        return template.replace(/\{\{(\w+)\}\}/g, (match, key) => {
-                            return product[key] !== undefined ? product[key] : '';
-                        });
-                    }).join('');
+            let renderer = null;
+            function load() {
+                renderer = {
+                    to_html(template, products) {
+                        return products.map(product => {
+                            return template.replace(/\{\{(\w+)\}\}/g, (match, key) => {
+                                return product[key] !== undefined ? product[key] : '';
+                            });
+                        }).join('');
+                    }
                 }
             };
+
+            load();
 
             let clicked = 0;
 
@@ -302,11 +297,33 @@
                 }
             ]
 
-            const template = "<div class='product'> <a href={{page}}><img src={{image}} alt={{image}} style='width:300px;height:500px;'></a> <p> <h1>{{title}}</h1> <p> <h2>€{{price}}</h2></div>";
+            const orgproducts = products;
+
+            
+            function selectFunction(elem) {
+                if(elem.value == "order") {
+                    products = orgproducts;
+                } else if(elem.value == "low-high") {
+                    products.sort((a, b) => a.price - b.price);
+                } else if(elem.value == "high-low") {
+                    products.sort((a, b) => b.price - a.price);
+                }
+
+                load();
+                template = "<div class='product'> <a href={{page}}><img src={{image}} alt={{image}} style='width:300px;height:500px;'></a> <p> <h1>{{title}}</h1> <p> <h2>€{{price}}</h2></div>";
+                let html = renderer.to_html(template, products);
+                let productenLijst = document.getElementById("product-container");
+                console.log(productenLijst)
+                productenLijst.innerHTML = html;
+            }
+            
+            let template = "<div class='product'> <a href={{page}}><img src={{image}} alt={{image}} style='width:300px;height:500px;'></a> <p> <h1>{{title}}</h1> <p> <h2>€{{price}}</h2></div>";
 
             let html = renderer.to_html(template, products);
 
-            document.write(html)
+            let productenLijst = document.getElementById("product-container");
+            productenLijst.innerHTML = html;
+            
         </script>
     </body>
 </html>
