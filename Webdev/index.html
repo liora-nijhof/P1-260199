@@ -9,13 +9,22 @@
         <script src="shop.js"></script>
         
         <title>manga_webshop</title>
+
+        <style>
+            .rectangle {
+                height: 200px;
+                width: 100px;
+                background-color: #ffffff;
+            }
+        </style>
     </head>
     <body>
         <div class="header">
             <h1>Manga webshop</h1>
             <p>Best manga's for a cheap price!</p>
             <div class="cart">
-                <img src="./assets/cart.jpe" alt="cart_icon" width="120" height="120"> 
+                <img src="./assets/cart.jpe" alt="cart_icon" width="120" height="120">
+                <div class="rectangle"></div>
             </div>
         </div>
         <hr class="double">
@@ -87,7 +96,7 @@
                 },
                 {
                     'title': "Soul eater vol 09",
-                    'price': 13.50,
+                    'price': 13.55,
                     'image': "assets/soul/volume9.jpe",
                     'pressed': clicked,
                     'page': "pages/soul-eater-vol-09.html"
@@ -297,12 +306,12 @@
                 }
             ]
 
-            const orgproducts = products;
 
+            let originalShitString = JSON.stringify(products);
             
             function selectFunction(elem) {
                 if(elem.value == "order") {
-                    products = orgproducts;
+                    products =  JSON.parse(originalShitString);
                 } else if(elem.value == "low-high") {
                     products.sort((a, b) => a.price - b.price);
                 } else if(elem.value == "high-low") {
