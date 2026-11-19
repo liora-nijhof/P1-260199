@@ -9,21 +9,24 @@
   text-shadow: 3px 3px black;
 }
 
-.cart {
+#cart {
   float:right;
-  margin-right:-60px;
+  margin-right:-70px;
   margin-top:-390px;
-  height:120px;
-  transition-duration: 0.4s;
+  height:115px;
+  width:115px;
+  border:none;
+  background:white;
+  transition-duration: 0.2s;
+}
+
+#cart:hover {
+  background:#e9e9e9;
 }
 
 .rectangle {
   float:right;
   margin-right:-100px;
-}
-
-.cartmenu:hover {
-  box-shadow:0 8px 16px 0 rgba(0,0,0,0.6);
 }
 
 hr {

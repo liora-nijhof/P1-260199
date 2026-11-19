@@ -22,10 +22,33 @@
         <div class="header">
             <h1>Manga webshop</h1>
             <p>Best manga's for a cheap price!</p>
-            <div class="cart">
-                <img src="./assets/cart.jpe" alt="cart_icon" width="120" height="120">
+            <button type="button" id="cart" onclick="cartopen()">
+	            <img src="./assets/cart.png"
+     	        alt="Button Image" style="width: 80px; height: 60px;">
+                <script>check();</script>
+            </button>
+
+            <div class="form-popup" id="myForm">
                 <div class="rectangle"></div>
             </div>
+
+            <script>
+                let open = 0;
+
+                function cartopen() {
+                    open = 1;
+                    console.log(open);
+                }
+
+                function check() {
+                    if (open == 1) {
+                    console.log("yo")
+                    document.getElementById("myForm").style.display = "block";
+                    } else if (open == 0) {
+                    document.getElementById("myForm").style.display = "none";
+                    }
+                }
+            </script>
         </div>
         <hr class="double">
         <div class="searchbar">
